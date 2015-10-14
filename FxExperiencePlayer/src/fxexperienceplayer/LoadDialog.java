@@ -57,7 +57,7 @@ public class LoadDialog {
                                     ButtonBuilder.create()
                                         .text("Browse...")
                                         .onAction(new EventHandler<ActionEvent>() {
-                                            @Override public void handle(ActionEvent arg0) {
+                                            public void handle(ActionEvent arg0) {
                                                 FileChooser fc = new FileChooser();
                                                 File file = fc.showOpenDialog(dialog);
                                                 if (file != null) urlField.setText(file.toURI().toString());
@@ -74,7 +74,7 @@ public class LoadDialog {
                                         .text("Cancel")
                                         .cancelButton(true)
                                         .onAction(new EventHandler<ActionEvent>() {
-                                            @Override public void handle(ActionEvent arg0) {
+                                            public void handle(ActionEvent arg0) {
                                                 dialog.hide();
                                             }
                                         })
@@ -83,7 +83,7 @@ public class LoadDialog {
                                         .text("Load...")
                                         .defaultButton(true)
                                         .onAction(new EventHandler<ActionEvent>() {
-                                            @Override public void handle(ActionEvent arg0) {
+                                            public void handle(ActionEvent arg0) {
                                                 dialog.hide();
                                                 playList.load(urlField.getText());
                                             }
