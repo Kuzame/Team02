@@ -72,7 +72,7 @@ public class PlayList {
             }
         };
         fetchPlayListTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
-            @Override public void changed(ObservableValue<? extends State> arg0, State oldState, State newState) {
+            public void changed(ObservableValue<? extends State> arg0, State oldState, State newState) {
                 System.out.println("newState = " + newState);
                 if (newState == State.SUCCEEDED) {
                     try {
@@ -119,7 +119,7 @@ public class PlayList {
             }
         };
         fetchPlayListTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
-            @Override public void changed(ObservableValue<? extends State> arg0, State oldState, State newState) {
+            public void changed(ObservableValue<? extends State> arg0, State oldState, State newState) {
                 if (newState == State.SUCCEEDED) {
                     try {
                         songs.addAll(fetchPlayListTask.get());

@@ -64,7 +64,7 @@ public class FxExperiencePlayer extends Application {
                 timeLabel.setText(get());
             } else {
                 Platform.runLater(new Runnable() {
-                    @Override public void run() {
+                    public void run() {
                         timeLabel.setText(get());
                     }
                 });
@@ -76,7 +76,7 @@ public class FxExperiencePlayer extends Application {
         
         Button prevBtn = new Button();
         prevBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {
                 if (curreentSongIndex > 0) {
                     curreentSongIndex --;
                     play(curreentSongIndex);
@@ -86,7 +86,7 @@ public class FxExperiencePlayer extends Application {
         
         Button nextBtn = new Button();
         nextBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {
                 if (curreentSongIndex < playList.getSongs().size()) {
                     curreentSongIndex ++;
                     play(curreentSongIndex);
@@ -96,7 +96,7 @@ public class FxExperiencePlayer extends Application {
         
         Button playPauseBtn = new Button();
         playPauseBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {
                 if (mediaPlayer == null) {
                     play(curreentSongIndex);
                 } else if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
@@ -109,14 +109,14 @@ public class FxExperiencePlayer extends Application {
         
         Button loadBtn = new Button();
         loadBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {
                 LoadDialog.loadPlayList(playList, primaryStage);
             }
         });
         
         Button powerBtn = new Button();
         powerBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {
                 if (mediaPlayer != null) {
                     mediaPlayer.stop();
                 }
@@ -131,7 +131,7 @@ public class FxExperiencePlayer extends Application {
             sliders[i] = new Slider(EqualizerBand.MIN_GAIN, EqualizerBand.MAX_GAIN, 0);
             sliders[i].setOrientation(Orientation.VERTICAL);
             sliders[i].valueProperty().addListener(new ChangeListener<Number>() {
-                @Override public void changed(ObservableValue<? extends Number> arg0, Number oldValue, Number newValue) {
+                public void changed(ObservableValue<? extends Number> arg0, Number oldValue, Number newValue) {
                     if (mediaPlayer != null) {
                         mediaPlayer.getAudioEqualizer().getBands().get(fi).setGain(newValue.doubleValue());
                     }
@@ -192,7 +192,7 @@ public class FxExperiencePlayer extends Application {
         for (int i=0; i<10; i++) vuMeters[i] = new VUMeter();
         
         spectrumListener = new AudioSpectrumListener() {
-            @Override public void spectrumDataUpdate(double timestamp, double duration, float[] magnitudes, float[] phases) {
+            public void spectrumDataUpdate(double timestamp, double duration, float[] magnitudes, float[] phases) {
                 double avarage = 0;
                 for (int i=0; i<10; i++) {
                     vuMeters[i].setValue((60+magnitudes[i])/60);
@@ -219,7 +219,7 @@ public class FxExperiencePlayer extends Application {
         balanceKnob.setId("balance");
         balanceKnob.getStyleClass().add("knobStyle");
         balanceKnob.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number newValue) {
+            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number newValue) {
                 if(mediaPlayer != null) mediaPlayer.setBalance(newValue.doubleValue());
             }
         });
@@ -228,7 +228,7 @@ public class FxExperiencePlayer extends Application {
         volumeKnob.setId("volume");
         volumeKnob.getStyleClass().add("knobStyle");
         volumeKnob.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number newValue) {
+            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number newValue) {
                 if(mediaPlayer != null) mediaPlayer.setVolume(newValue.doubleValue());
             }
         });
@@ -267,7 +267,7 @@ public class FxExperiencePlayer extends Application {
         
         // listen for when we have songs
         playList.getSongs().addListener(new ListChangeListener<Pair<String,String>>() {
-            @Override public void onChanged(Change<? extends Pair<String,String>> arg0) {
+            public void onChanged(Change<? extends Pair<String,String>> arg0) {
                 if (!playList.getSongs().isEmpty()) {
                     curreentSongIndex = 0;
                     play(curreentSongIndex);
@@ -302,7 +302,7 @@ public class FxExperiencePlayer extends Application {
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.setOnError(new Runnable() {
-            @Override public void run() {
+            public void run() {
                 System.out.println("mediaPlayer.getError() = " + mediaPlayer.getError());
             }
         });

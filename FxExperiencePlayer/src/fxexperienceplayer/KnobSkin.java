@@ -50,7 +50,7 @@ public class KnobSkin extends SkinBase<Slider, KnobBehavior> {
         knob.getChildren().add(knobDot);
         
         getSkinnable().setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent me) {
+            public void handle(MouseEvent me) {
                 double dragStart = mouseToValue(me.getX(), me.getY());
                 double zeroOneValue = (getSkinnable().getValue() - getSkinnable().getMin()) / (getSkinnable().getMax() - getSkinnable().getMin());
                 dragOffset = zeroOneValue - dragStart;
@@ -58,12 +58,12 @@ public class KnobSkin extends SkinBase<Slider, KnobBehavior> {
             }
         });
         getSkinnable().setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent me) {
+            public void handle(MouseEvent me) {
                 getBehavior().knobRelease(me,mouseToValue(me.getX(), me.getY()));
             }
         });
         getSkinnable().setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent me) {
+            public void handle(MouseEvent me) {
                 getBehavior().knobDragged(me, mouseToValue(me.getX(), me.getY()) + dragOffset);
             }
         });
