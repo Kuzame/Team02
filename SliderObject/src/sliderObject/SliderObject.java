@@ -1,4 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sliderObject;
+
 
 import javafx.application.Application;
 import javafx.beans.property.*;
@@ -10,7 +16,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+//import javafx.stage.StageStyle;
+
+/**
+ *
+ * @author Reign
+ */
  
 
 public class SliderObject extends Application  {
@@ -81,7 +92,7 @@ public class SliderObject extends Application  {
     scene.setFill(Color.WHITE);
     scene.getStylesheets().add(SliderObject.class.getResource("sliderObject.css").toExternalForm());
     primaryStage.setScene(scene);
-    primaryStage.initStyle(StageStyle.TRANSPARENT);
+//    primaryStage.initStyle(StageStyle.TRANSPARENT);
     primaryStage.show();
   }
  
