@@ -46,8 +46,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBuilder;
 import javafx.stage.StageStyle;
-import jfxtras.labs.scene.control.gauge.Led;
-import jfxtras.labs.scene.control.gauge.LedBuilder;
+//import jfxtras.labs.scene.control.gauge.Led;
+//import jfxtras.labs.scene.control.gauge.LedBuilder;
 
 
 /**
@@ -124,20 +124,18 @@ public class GaugeObjectDemo extends Application {
   final GridPane gridpane=new GridPane();
   gridpane.setPadding(new Insets(5));
   gridpane.setAlignment(Pos.TOP_CENTER);
-  for (int row=0; row < 2; row++) {
-    ArrayList<Led> column=new ArrayList<Led>(3);
-    java.util.Vector rows = new java.util.Vector();
-    for (int col=0; col < 3; col++) {
-      int green=RND.nextInt(255);
-      int blue=RND.nextInt(128) + 128;
-      Led led=LedBuilder.create().color(Color.rgb(0,green,blue)).build();
-      column.add(led);
-      gridpane.add(led,col,row);
-    }
-    rows.add(column);
-  }
-//  pane.getChildren().add(pane);
-//  pane.getChildren().add(stack);
+//  for (int row=0; row < 2; row++) {
+//    ArrayList<Led> column=new ArrayList<Led>(3);
+//    java.util.Vector rows = new java.util.Vector();
+//    for (int col=0; col < 3; col++) {
+//      int green=RND.nextInt(255);
+//      int blue=RND.nextInt(128) + 128;
+//      Led led=LedBuilder.create().color(Color.rgb(0,green,blue)).build();
+//      column.add(led);
+//      gridpane.add(led,col,row);
+//    }
+//    rows.add(column);
+//  }
   
     text.setStyle("-fx-color: white");    
     text.setStyle("-fx-font: 24 arial;");    
