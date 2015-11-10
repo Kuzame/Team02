@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 public class FanManager extends Application {
     
     private static final double WIDTH = 1024, HEIGHT = 768;
-    FanPane[] fanPanes = new FanPane[6];
+    FanPane[] fanPanes = new FanPane[3];
 
     private void init(Stage primaryStage) {
         HBox box = new HBox();
@@ -65,6 +65,8 @@ public class FanManager extends Application {
 
         // Add tile pane to scroll pane
         scrollPane.setContent(tilePane);
+        scrollPane.getStylesheets().add(getClass().getResource("view/sliderObject.css").toExternalForm());
+
     }
 
     public double getSampleWidth() {
