@@ -7,8 +7,6 @@
  */
 package FanManager;
 
-import FanManager.model.Fan;
-import FanManager.model.FanGroup;
 import FanManager.model.FanPane;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,14 +18,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
 import FanManager.model.Fan;
@@ -88,14 +82,43 @@ public class FanManager extends Application {
 
         
         
-                try {
+
+    }
+
+    public double getSampleWidth() {
+        return 495;
+    }
+
+    public double getSampleHeight() {
+        return 480;
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        init(primaryStage);
+        primaryStage.show();
+        Thread networking = new Thread(new Networking());
+        networking.start();
+        
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+    
+    class Networking implements Runnable {
+        
+        @Override
+        public void run() {
+            try {
             // Create a server socket
             serverSocket = new ServerSocket(8000);
             System.out.println("Server started at " + new Date() + '\n');
 
             // Listen for a connection request
+            System.out.println("Pre accept");
             socket = serverSocket.accept();
-
+            System.out.println("Post accept");
             // Create data input and output streams
             ObjectOutputStream outputToClient = new ObjectOutputStream(
                     socket.getOutputStream());
@@ -111,9 +134,9 @@ public class FanManager extends Application {
             	double speed1 = Math.round(fans.get(0).getSpeed());
                 System.out.println("speed of fan 1: " + speed1 + "\n");
             	
-            	Fan f = (Fan) inputFromClient.readObject();
+            	FanGroup f = (FanGroup) inputFromClient.readObject();
             	//jta.append("speed 1: "+ f.getSpeed() + "\n");
-                System.out.println("speed 1: "+ f.getSpeed() + "\n");
+                System.out.println("speed 1: "+ f.getFans().get(0).getSpeed() + "\n");
 
             	   
             }
@@ -135,23 +158,6 @@ public class FanManager extends Application {
         	}
         	
         }
-    }
-
-    public double getSampleWidth() {
-        return 495;
-    }
-
-    public double getSampleHeight() {
-        return 480;
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        init(primaryStage);
-        primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
+        }
     }
 }
