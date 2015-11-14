@@ -43,20 +43,20 @@ public class FanPane extends FlowPane {
     private AnimationTimer      timer;
     private GaugeObject         gauge;
 
-    // Speed Input Field
-    private SpeedInputField     speedField;
-    
-    // Frequency Input Field
-    private FreqInputField     freqField;
+    //values to hold for Input Text Fields
+    private double              freqValue;
+    private double              speedValue;
 
+    // Input Text Fields
+    private SpeedInputField     speedField;
+    private FreqInputField      freqField;
  
-    // Slider
-    private Slider speedKnob;
-    private Slider freqKnob;
+    // Knobs
+    private Slider              speedKnob;
+    private Slider              freqKnob;
 
     // Label
-    final private Label speedInputLabel = new Label();
-
+    final private Label         speedInputLabel = new Label();
 
     // Fan Object
     private Fan                 fan;
@@ -81,11 +81,6 @@ public class FanPane extends FlowPane {
         gauge.setTranslateY((int) (HEIGHT / 32));
         gauge.setStyle("-fx-background-color: transparent");
 
-        
-        // Create input textfields
-        speedField = SpeedInputField();
-        freqField = FreqInputField();
-        
     // Temperature
         // Create and style temperature label
         Label temperatureLabel = new Label("Temperature");
@@ -104,9 +99,8 @@ public class FanPane extends FlowPane {
         // Create and style speed label
         Label speedLabel = new Label("Speed");
         speedLabel.setTranslateX((int) (WIDTH / 2) - 130);
-        speedLabel.setTranslateY((int) (HEIGHT / 4) + 195);
+        speedLabel.setTranslateY((int) (HEIGHT / 4) + 175);
         speedLabel.setStyle("-fx-text-fill: white;");
-//        speedLabel.setStyle("-fx-background-color: green");
 
         // Create speed Knob
 	speedKnob = new Slider(0,100,0);
@@ -114,11 +108,14 @@ public class FanPane extends FlowPane {
 	speedKnob.setId("knob");
 	speedKnob.getStyleClass().add("knobStyle");
         speedKnob.setTranslateX((int) (WIDTH / 2) - 90);
-        speedKnob.setTranslateY((int) (HEIGHT / 4) + 170);
+        speedKnob.setTranslateY((int) (HEIGHT / 4) + 150);
+
+        // Create input textfields
+        speedField = SpeedInputField();
 
         // Locate speedField
         speedField.setTranslateX((int) (WIDTH / 16));
-        speedField.setTranslateY((int) (HEIGHT / 32) + 390);
+        speedField.setTranslateY((int) (HEIGHT / 32) + 370);
         speedField.valueProperty().bindBidirectional(gauge.valueProperty());
         speedField.valueProperty().bindBidirectional(speedKnob.valueProperty());
         speedField.setPrefWidth(75);
@@ -129,16 +126,15 @@ public class FanPane extends FlowPane {
         speedInputLabel.setStyle("-fx-font: 12 arial;"); 
         speedInputLabel.setStyle("-fx-background-color: grey");
         speedInputLabel.setTranslateX((int) (WIDTH / 16));
-        speedInputLabel.setTranslateY((int) (HEIGHT / 32 + 300));
+        speedInputLabel.setTranslateY((int) (HEIGHT / 32 + 280));
         speedInputLabel.setPrefWidth(50);        
         
     // Frequency        
         // Create and style frequency label
         Label freqLabel = new Label("Frequency");
         freqLabel.setTranslateX((int) (WIDTH / 2) - 150);
-        freqLabel.setTranslateY((int) (HEIGHT / 4) + 410);
+        freqLabel.setTranslateY((int) (HEIGHT / 4) + 370);
         freqLabel.setStyle("-fx-text-fill: white;");
-//        freqLabel.setStyle("-fx-background-color: green");
 
         // Create frequency Knob
 	freqKnob = new Slider(0,40000,40);
@@ -146,14 +142,16 @@ public class FanPane extends FlowPane {
 	freqKnob.setId("knob");
 	freqKnob.getStyleClass().add("knobStyle");
         freqKnob.setTranslateX((int) (WIDTH / 2) - 90);
-        freqKnob.setTranslateY((int) (HEIGHT / 4) + 390);
+        freqKnob.setTranslateY((int) (HEIGHT / 4) + 350);
 
+        // Create input textfields        
+        freqField = FreqInputField();
+        
         // Locate freqField
-        freqField.setTranslateX((int) (WIDTH / 16));
-        freqField.setTranslateY((int) (HEIGHT / 32) + 600);
-        freqField.valueProperty().bindBidirectional(freqKnob.valueProperty());
         freqField.setPrefWidth(75);
-
+        freqField.setTranslateX((int) (WIDTH / 16));
+        freqField.setTranslateY((int) (HEIGHT / 32) + 560);
+        freqField.valueProperty().bindBidirectional(freqKnob.valueProperty());
 
         // Get values from speedKnob and the gauge to display in the input label
         speedInputLabel.setText(Math.round(speedKnob.getValue()) + "");
@@ -161,19 +159,19 @@ public class FanPane extends FlowPane {
         gauge.valueProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
             if (newValue == null) {
-              speedLabel.setText("");
+              speedInputLabel.setText("");
               return;
             }
-        speedLabel.setText((newValue.doubleValue()) + "");
+        speedInputLabel.setText((newValue.doubleValue()) + "");
             }   
         });
         speedKnob.valueProperty().addListener(new ChangeListener<Number>() {
             @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
             if (newValue == null) {
-                speedLabel.setText("");
+                speedInputLabel.setText("");
                 return;
         }
-        speedLabel.setText(Math.round(newValue.doubleValue()) + "");
+        speedInputLabel.setText(Math.round(newValue.intValue()) + "");
             }
         });   
 
@@ -200,6 +198,9 @@ public class FanPane extends FlowPane {
 
         // Add main content to pane
         getChildren().add(group);
+        
+
+
         // Event handler: 
         //   Inputs:    Temperature Data
         //   Performs:  Turn On/Off/Changes Speed of Fan animation
@@ -211,11 +212,6 @@ public class FanPane extends FlowPane {
         // Update Temperature
         fan.setTemperature(Double.parseDouble(temperatureTF.getText()));
         });
-
-        // Event handler: 
-        //   Inputs:    Fan Speed
-        //   Performs:  Turn On/Off/Changes Speed of Fan animation
-        //   Outputs:   None
 
         speedKnob.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -243,7 +239,7 @@ public class FanPane extends FlowPane {
     }
 
     
-    // InputFields
+    // InputTextFields
     private SpeedInputField SpeedInputField() {
         speedField = new SpeedInputField(0, 100, 0);
         return speedField;
@@ -353,9 +349,7 @@ public class FanPane extends FlowPane {
         editField.setTranslateX(-text.getGraphicTextGap() - 1);
         editField.setTranslateY(-3); // adjustment hack to get alignment right.
         editField.requestFocus();
-        editField.selectAll(); // hmm there is a weird bug in javafx here, the text is not selected,
-                               // but if I focus on another window by clicking only on title bars,
-                               // then back to the javafx app, the text is magically selected.
+        editField.selectAll();
  
         editField.setOnKeyReleased(new EventHandler<KeyEvent>() {
           @Override public void handle(KeyEvent t) {

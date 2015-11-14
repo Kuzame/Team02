@@ -91,7 +91,7 @@ public class FanManager extends Application {
         init(primaryStage);
         primaryStage.show();
         Thread networking = new Thread(new Networking());
-        networking.start();
+//        networking.start(); /* network hanging in background after app is closed */
         
     }
 
