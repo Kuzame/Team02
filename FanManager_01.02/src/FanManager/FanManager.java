@@ -29,7 +29,7 @@ import FanManager.model.FanGroup;
 
 /**
  *
- * @author Reign
+ * @author Felix & Reign
  *      
  */
 public class FanManager extends Application {
@@ -39,7 +39,7 @@ public class FanManager extends Application {
 
     private static final double WIDTH = 1050, HEIGHT = 768;
     FanPane[] fanPanes = new FanPane[3];
-
+    
     private void init(Stage primaryStage) {
         HBox box = new HBox();
 
@@ -49,8 +49,6 @@ public class FanManager extends Application {
         }
 
         // Setup primary stage
-//        primaryStage.setWidth(2048);
-//        primaryStage.setHeight(768);
         primaryStage.setResizable(true);
         primaryStage.setScene(new Scene(box, WIDTH, HEIGHT));
         primaryStage.setTitle("Fan Manager");
@@ -77,12 +75,7 @@ public class FanManager extends Application {
 
         // Add tile pane to scroll pane
         scrollPane.setContent(tilePane);
-//        scrollPane.getStylesheets().add(getClass().getResource("view/sliderObject.css").toExternalForm());
         scrollPane.getStylesheets().add(getClass().getResource("view/knobObject.css").toExternalForm());
-
-        
-        
-
     }
 
     public double getSampleWidth() {
@@ -135,7 +128,6 @@ public class FanManager extends Application {
                 System.out.println("speed of fan 1: " + speed1 + "\n");
             	
             	FanGroup f = (FanGroup) inputFromClient.readObject();
-            	//jta.append("speed 1: "+ f.getSpeed() + "\n");
                 System.out.println("speed 1: "+ f.getFans().get(0).getSpeed() + "\n");
 
             	   
