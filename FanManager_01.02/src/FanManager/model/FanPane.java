@@ -141,7 +141,7 @@ public class FanPane extends FlowPane {
 //        freqLabel.setStyle("-fx-background-color: green");
 
         // Create frequency Knob
-	freqKnob = new Slider(40,40000,40);
+	freqKnob = new Slider(0,40000,40);
 	freqKnob.setBlockIncrement(1);
 	freqKnob.setId("knob");
 	freqKnob.getStyleClass().add("knobStyle");
