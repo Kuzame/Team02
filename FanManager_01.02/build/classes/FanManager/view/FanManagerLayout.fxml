@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FanManager.view.FanManagerLayoutController">
+   <children>
+      <ScrollPane fx:id="scrollPane" layoutX="3.0" layoutY="58.0" prefHeight="768.0" prefWidth="1050.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="769.0" prefWidth="1051.0">
+               <children>
+                  <TilePane fx:id="fanPane" layoutY="1.0" prefColumns="3" prefHeight="749.0" prefWidth="1031.0" />
+               </children></AnchorPane>
+        </content>
+      </ScrollPane>
+      <BorderPane layoutX="6.0" layoutY="6.0" prefHeight="44.0" prefWidth="154.0">
+         <left>
+            <Label text="Temperature:" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="°F" BorderPane.alignment="CENTER" />
+         </right>
+         <center>
+            <TextField fx:id="temperatureLabel" prefHeight="25.0" prefWidth="58.0" text="69.94" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="171.0" layoutY="6.0" prefHeight="44.0" prefWidth="116.0">
+         <left>
+            <Label text="Humidity:" BorderPane.alignment="CENTER" />
+         </left>
+         <center>
+            <TextField fx:id="humidityLabel" prefHeight="24.0" prefWidth="52.0" text="55.54" BorderPane.alignment="CENTER" />
+         </center>
+         <right>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="1.0" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+      <BorderPane layoutX="311.0" layoutY="6.0" prefHeight="44.0" prefWidth="142.0">
+         <left>
+            <Label text="Barometer:" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hg" BorderPane.alignment="CENTER" />
+         </right>
+         <center>
+            <TextField fx:id="barometerLabel" prefHeight="17.0" prefWidth="68.0" text="29.35" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
