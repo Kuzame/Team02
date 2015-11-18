@@ -56,12 +56,12 @@ public class FanGroup implements Serializable {
 		return fans;
 	}
 
-	public void setFans(ArrayList<Fan> fans) {
+	public synchronized void setFans(ArrayList<Fan> fans) {
 		this.fans = fans;
 	}
 
 	// Takes array of fans
-	public void setFans(Fan [] fans) {
+	public synchronized void setFans(Fan [] fans) {
 		this.fans = new ArrayList<Fan>(Arrays.asList(fans));
 	}
 

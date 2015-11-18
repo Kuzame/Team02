@@ -1,5 +1,3 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -30,22 +28,25 @@ import FanManager.model.FanGroup;
 /**
  *
  * @author Felix & Reign
- *      
+ *
  */
 public class FanManager extends Application {
-    
-    private Socket socket;
-    private ServerSocket serverSocket;
 
     private static final double WIDTH = 1050, HEIGHT = 768;
-    FanPane[] fanPanes = new FanPane[3];
+    private int FANCOUNT = 6;
     
+    
+    FanPane[] fanPanes = new FanPane[FANCOUNT];
+    private Fan[] fanArray = new Fan[FANCOUNT];
+    FanGroup fanGroup;
+
     private void init(Stage primaryStage) {
         HBox box = new HBox();
 
         // Create fan panes; current 6
         for (int i = 0; i < fanPanes.length; i++) {
             fanPanes[i] = new FanPane();
+            fanArray[i] = fanPanes[i].getFan();
         }
 
         // Setup primary stage
@@ -76,6 +77,9 @@ public class FanManager extends Application {
         // Add tile pane to scroll pane
         scrollPane.setContent(tilePane);
         scrollPane.getStylesheets().add(getClass().getResource("view/knobObject.css").toExternalForm());
+
+        // Create fan group from fan Array
+        fanGroup = new FanGroup(fanArray, fanArray[0].getTemperature(), 40, 50);
     }
 
     public double getSampleWidth() {
@@ -91,65 +95,101 @@ public class FanManager extends Application {
         init(primaryStage);
         primaryStage.show();
         Thread networking = new Thread(new Networking());
-//        networking.start(); /* network hanging in background after app is closed */
-        
+        networking.setDaemon(true);
+        networking.start(); /* network hanging in background after app is closed */
+
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-    
+
+    /*
+     *   Private inner class to handle networking
+     */
     class Networking implements Runnable {
-        
+
+        private ServerSocket serverSocket;
+        private Socket socket;
+
+        private ObjectOutputStream toClient;
+        private ObjectInputStream fromClient;
+
         @Override
         public void run() {
             try {
-            // Create a server socket
-            serverSocket = new ServerSocket(8000);
-            System.out.println("Server started at " + new Date() + '\n');
+                // Create a server socket
+                serverSocket = new ServerSocket(8000);
+                System.out.println("Server started at " + new Date() + '\n');
 
-            // Listen for a connection request
-            System.out.println("Pre accept");
-            socket = serverSocket.accept();
-            System.out.println("Post accept");
-            // Create data input and output streams
-            ObjectOutputStream outputToClient = new ObjectOutputStream(
-                    socket.getOutputStream());
-            outputToClient.flush();
-            ObjectInputStream inputFromClient = new ObjectInputStream(
-                    socket.getInputStream());
+                // Listen for a connection request
+                socket = serverSocket.accept();
 
-            while (true) {
-                
-            	
-            	FanGroup fg = (FanGroup) inputFromClient.readObject();
-            	ArrayList<Fan> fans = fg.getFans();
-            	double speed1 = Math.round(fans.get(0).getSpeed());
-                System.out.println("speed of fan 1: " + speed1 + "\n");
-            	
-            	FanGroup f = (FanGroup) inputFromClient.readObject();
-                System.out.println("speed 1: "+ f.getFans().get(0).getSpeed() + "\n");
+                // Create data streams
+                toClient = new ObjectOutputStream(socket.getOutputStream());
+                toClient.flush();
 
-            	   
+                // Create data input
+                fromClient = new ObjectInputStream(socket.getInputStream());
+
+                // Handle data
+                sendData();
+
+            } catch (IOException ex) {
+                System.err.println(ex);
+            } finally {
+                try {
+                    socket.close();
+                    serverSocket.close();
+                } catch (SocketException ex) {
+                    System.err.println(ex);
+                } catch (IOException ex) {
+                    System.err.println(ex);
+                }
             }
-        } catch (IOException ex) {
-            System.err.println(ex);
-        } catch (ClassNotFoundException ex) {
-            System.err.println(ex);
-        }finally{
-        	
-        	try{
-        	socket.close();
-        	serverSocket.close();
-        	
-        	}catch(SocketException ex){
-        		System.err.println(ex);
-        	}catch(IOException ex){
-        		System.err.println(ex);
-        	
-        	}
-        	
         }
+
+        private void sendData() {
+            try {
+
+                while (true) {
+
+                    // Read from network
+                    fanGroup = (FanGroup) fromClient.readObject();
+
+                    // Update gauge animations
+                    for (int i = 0; i < fanGroup.getFans().size(); i++) {
+                        fanPanes[i].setFan(fanGroup.getFans().get(i));
+                        fanPanes[i].updateGauge();
+                    }
+
+                    // Write to network
+                    toClient.writeObject(fanGroup);
+                    toClient.reset();
+                    toClient.flush();
+
+                    Thread.sleep(1000);
+
+                }
+            } catch (ClassNotFoundException ex) {
+                System.err.println(ex);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                System.err.println(ex);
+            } finally {
+                try {
+                    socket.close();
+                    fromClient.close();
+                    toClient.close();
+                } catch (SocketException ex) {
+                    System.err.println(ex);
+                    System.out.println("Fan Server Error: Finally Block");
+                } catch (IOException ex) {
+                    System.err.println(ex);
+                }
+
+            }
         }
     }
 }
