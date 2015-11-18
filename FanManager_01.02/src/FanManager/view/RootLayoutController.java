@@ -44,7 +44,7 @@ public class RootLayoutController {
     	Alert alert = new Alert(Alert.AlertType.INFORMATION);
     	alert.setTitle("FanManager");
     	alert.setHeaderText("About");
-    	alert.setContentText("Author: Reign\nWebsite: www.reign-tech.com");
+    	alert.setContentText("Author: CS56 Team 02 Fall 2015\nReign DeRenzo   Website: www.reign-tech.com\nFelix\nChad\nKristen\nAdrean\nOmid\nDishon\nJorge\nPLEASE FILL THIS IN!!!");
 
     	alert.showAndWait();
     }
