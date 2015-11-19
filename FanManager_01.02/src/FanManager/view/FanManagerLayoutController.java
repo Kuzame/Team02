@@ -141,7 +141,7 @@ public class FanManagerLayoutController implements Initializable {
                     // Update gauge animations
                     for (int i = 0; i < fanGroup.getFans().size(); i++) {
                         fanPanes[i].setFan(fanGroup.getFans().get(i));
-//                        fanPanes[i].updateGauge();
+                        fanPanes[i].updateGauge();
                     }
 
                     // Write to network
