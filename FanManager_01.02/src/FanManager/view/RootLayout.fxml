@@ -16,7 +16,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Connections">
             <items>
-              <MenuItem mnemonicParsing="false" text="Wifi" />
+              <MenuItem mnemonicParsing="false" onAction="#handleLANOn" text="LAN On" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleLANOff" text="LAN Off" />
                   <MenuItem mnemonicParsing="false" text="Bluetooth" />
             </items>
           </Menu>
