@@ -328,7 +328,7 @@ public class GaugeObject extends Region {
     public final double getValue() {
         return value.get();
     }
-    public final void setValue(final double VALUE) {
+    public final synchronized void setValue(final double VALUE) {
         value.set(clamp(getMinValue(), getMaxValue(), VALUE));
     }
     public final DoubleProperty valueProperty() {
