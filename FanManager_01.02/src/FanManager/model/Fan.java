@@ -28,10 +28,22 @@ public class Fan implements Serializable {
 
     private double temperature;
 
-	// Constructor
+    // Constructor
     //
     public Fan() {
         this(0.0, 0.0, 0.0, 70, 60, 0.0, 100.0, 70.0);
+    }
+    
+    public Fan(double speed, Fan f){
+        this.power = f.power;
+        this.duty = f.duty;
+        this.minStartingTemp = f.minStartingTemp;
+        this.minRunningTemp = f.minRunningTemp;
+        this.minSpeed = f.minSpeed;
+        this.maxSpeed = f.maxSpeed;
+        this.temperature = f.temperature;
+        
+        setSpeed(speed);        
     }
 
     public Fan(double power, double duty, double speed,
@@ -50,7 +62,7 @@ public class Fan implements Serializable {
         setSpeed(speed);
     }
 
-	// Turn Off
+    // Turn Off
     //
     public void turnOff() {
         isOn = false;
@@ -60,7 +72,7 @@ public class Fan implements Serializable {
         setSpeed(0);
     }
 
-	// Turn On
+    // Turn On
     //
     public void turnOn(double power, double duty, double speed) {
         isOn = true;
@@ -78,7 +90,7 @@ public class Fan implements Serializable {
         setSpeed(minSpeed);
     }
 
-	// Getters & Setters
+    // Getters & Setters
     //
     //  Is On?
     public boolean isOn() {
@@ -161,6 +173,26 @@ public class Fan implements Serializable {
 
     public void setMaxSpeed(double maxSpeed) {
         this.maxSpeed = maxSpeed;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Fan) {
+            Fan temp = (Fan) obj;
+            if (this.isOn == temp.isOn
+                    && this.power == temp.power
+                    && this.duty == temp.duty
+                    && this.speed == temp.speed
+                    && this.minStartingTemp == temp.minStartingTemp
+                    && this.minRunningTemp == temp.minRunningTemp
+                    && this.minSpeed == temp.minSpeed
+                    && this.maxSpeed == temp.maxSpeed
+                    && this.temperature == temp.temperature) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
