@@ -5,6 +5,7 @@
  */
 package FanManager;
 
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
@@ -47,6 +48,7 @@ public class FreqInputField extends TextField {
       this.minValue = minValue;
       this.maxValue = maxValue;
       value = new SimpleDoubleProperty(initialValue);
+      
       setText(initialValue + "");
  
       FreqInputField inputField = this;
@@ -71,7 +73,14 @@ public class FreqInputField extends TextField {
             if (newValue.intValue() == 0 && (textProperty().get() == null || "".equals(textProperty().get()))) {
               // no action required, text property is already blank, we don't need to set it to 0.
             } else {
-              inputField.setText(newValue.toString());
+                Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+
+                   inputField.setText(newValue.toString());
+                }
+            });
+              
             }
           }
         }
