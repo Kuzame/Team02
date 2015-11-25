@@ -11,85 +11,104 @@ import java.util.Arrays;
 
 public class FanGroup implements Serializable {
 
-	/**
-	 * For serialization/deserialization to check class version.
-	 */
-	private static final long serialVersionUID = 8674918854563762484L;
+    /**
+     * For serialization/deserialization to check class version.
+     */
+    private static final long serialVersionUID = 8674918854563762484L;
 
-	private ArrayList<Fan> fans;
+    private ArrayList<Fan> fans;
 
-	private double temperature;
-	private double humidity;
-	private double barometricPressure;
+    private double temperature;
+    private double humidity;
+    private double barometricPressure;
 
+    // Constructor
+    //
+    public FanGroup(double temperature, double humidity, double barometricPressure) {
+        super();
+        this.fans = new ArrayList<Fan>();
+    }
 
-	// Constructor
-	//
-	public FanGroup(double temperature, double humidity, double barometricPressure) {
-		super();
-		this.fans = new ArrayList<Fan>();
-	}
+    public FanGroup(ArrayList<Fan> fans, double temperature, double humidity, double barometricPressure) {
+        super();
+        this.fans = fans;
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.barometricPressure = barometricPressure;
+    }
 
-	public FanGroup(ArrayList<Fan> fans, double temperature, double humidity, double barometricPressure) {
-		super();
-		this.fans = fans;
-		this.temperature = temperature;
-		this.humidity = humidity;
-		this.barometricPressure = barometricPressure;
-	}
+    // Takes array of fans
+    public FanGroup(Fan[] fans, double temperature, double humidity, double barometricPressure) {
+        super();
+        this.fans = new ArrayList<Fan>(Arrays.asList(fans));
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.barometricPressure = barometricPressure;
+    }
 
-	// Takes array of fans
-	public FanGroup(Fan [] fans, double temperature, double humidity, double barometricPressure) {
-		super();
-		this.fans = new ArrayList<Fan>(Arrays.asList(fans));
-		this.temperature = temperature;
-		this.humidity = humidity;
-		this.barometricPressure = barometricPressure;
-	}
+    public void update(FanGroup fg) {
+        this.fans =  fg.fans;
+        this.temperature = fg.temperature;
+        this.humidity = fg.humidity;
+        this.barometricPressure = fg.barometricPressure;
+    }
+    
+    // Getters & Setters
+    //
+    // Fans
+    public ArrayList<Fan> getFans() {
+        return fans;
+    }
 
+    public synchronized void setFans(ArrayList<Fan> fans) {
+        this.fans = fans;
+    }
 
-	// Getters & Setters
-	//
+    // Takes array of fans
+    public synchronized void setFans(Fan[] fans) {
+        this.fans = new ArrayList<Fan>(Arrays.asList(fans));
+    }
 
-	// Fans
-	public ArrayList<Fan> getFans() {
-		return fans;
-	}
+    // Temperature
+    public double getTemperature() {
+        return temperature;
+    }
 
-	public synchronized void setFans(ArrayList<Fan> fans) {
-		this.fans = fans;
-	}
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
 
-	// Takes array of fans
-	public synchronized void setFans(Fan [] fans) {
-		this.fans = new ArrayList<Fan>(Arrays.asList(fans));
-	}
+    // Humidity
+    public double getHumidity() {
+        return humidity;
+    }
 
-	// Temperature
-	public double getTemperature() {
-		return temperature;
-	}
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
+    }
 
-	public void setTemperature(double temperature) {
-		this.temperature = temperature;
-	}
+    // Barometric Pressure
+    public double getBarometricPressure() {
+        return barometricPressure;
+    }
 
-	// Humidity
-	public double getHumidity() {
-		return humidity;
-	}
+    public void setBarometricPressure(double barometricPressure) {
+        this.barometricPressure = barometricPressure;
+    }
 
-	public void setHumidity(double humidity) {
-		this.humidity = humidity;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof FanGroup) {
+            FanGroup temp = (FanGroup) obj;
+            if (this.temperature == temp.temperature
+                    && this.humidity == temp.humidity
+                    && this.barometricPressure == temp.barometricPressure
+                    && this.fans.equals(temp.fans)) {
+                return true;
+            }
+        }
 
-	// Barometric Pressure
-	public double getBarometricPressure() {
-		return barometricPressure;
-	}
-
-	public void setBarometricPressure(double barometricPressure) {
-		this.barometricPressure = barometricPressure;
-	}
+        return false;
+    }
 
 }
