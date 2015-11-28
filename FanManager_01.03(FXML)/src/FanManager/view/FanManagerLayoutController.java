@@ -41,7 +41,7 @@ public class FanManagerLayoutController implements Initializable {
     @FXML
     private ScrollPane scrollPane;
     
-    private int FANCOUNT = 6;
+    private int FANCOUNT = 3;
     
     
     FanPane[] fanPanes = new FanPane[FANCOUNT];

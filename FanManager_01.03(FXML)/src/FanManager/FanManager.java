@@ -33,7 +33,6 @@ public class FanManager extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setResizable(true);
         this.primaryStage.setTitle("Fan Manager");
-
         // Load root layout from fxml file.
         initRootLayout();
         showFanManagerLayout();
