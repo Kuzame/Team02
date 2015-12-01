@@ -7,9 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FanManager.view.FanManagerLayoutController">
-   <children>
-      <ScrollPane fx:id="scrollPane" layoutX="3.0" layoutY="50.0" prefHeight="723.0" prefWidth="1060.0" stylesheets="@DarkTheme.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="50.0">
+<AnchorPane id="AnchorPane" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FanManager.view.FanManagerLayoutController">   
+    <children>
+      <ScrollPane fx:id="scrollPane" layoutX="3.0" layoutY="50.0" prefHeight="723.0" prefWidth="1000.0" stylesheets="@DarkTheme.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="50.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="791.0" prefWidth="1051.0">
                <children>
@@ -50,5 +50,6 @@
             <TextField fx:id="barometerLabel" prefHeight="17.0" prefWidth="68.0" text="29.35" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
+      <TextArea layoutX="18.0" layoutY="772.0" prefHeight="44.0" prefWidth="986.0" />
    </children>
 </AnchorPane>
