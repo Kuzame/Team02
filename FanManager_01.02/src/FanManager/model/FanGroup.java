@@ -47,12 +47,12 @@ public class FanGroup implements Serializable {
     }
 
     public void update(FanGroup fg) {
-        this.fans =  fg.fans;
+        this.fans = fg.fans;
         this.temperature = fg.temperature;
         this.humidity = fg.humidity;
         this.barometricPressure = fg.barometricPressure;
     }
-    
+
     // Getters & Setters
     //
     // Fans
@@ -109,6 +109,39 @@ public class FanGroup implements Serializable {
         }
 
         return false;
+    }
+
+    public String getManagerString() {
+        String result = "Manager;";
+
+        for (int i = 0; i < fans.size(); i++) {
+            result = result
+                    + String.format("f%d[%d,%.2f];", (i + 1),
+                            fans.get(i).getSpeed(),
+                            fans.get(i).getDuty());
+        }
+
+        result = result + "end\n";
+
+        return result;
+    }
+
+    public String getPrototypeString() {
+        String result = "Proto;"
+                + String.format("t[%.1f];h[%.1f];p[%.2f];",
+                        temperature,
+                        humidity,
+                        barometricPressure);
+
+        for (int i = 0; i < fans.size(); i++) {
+            result = result
+                    + String.format("f%d[%.1f];", (i + 1),
+                            fans.get(i).getTemperature());
+        }
+
+        result = result + "end\n";
+
+        return result;
     }
 
 }
