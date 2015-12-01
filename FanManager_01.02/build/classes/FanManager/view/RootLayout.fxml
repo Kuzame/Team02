@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane minHeight="861.0" minWidth="1032.0" prefHeight="861.0" prefWidth="1032.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FanManager.view.RootLayoutController">
+<BorderPane minHeight="861.0" minWidth="1000.0" prefHeight="861.0" prefWidth="1015.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FanManager.view.RootLayoutController">
    <top>
       <MenuBar minWidth="-Infinity" stylesheets="@DarkTheme.css" BorderPane.alignment="CENTER">
         <menus>
@@ -18,7 +18,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleLANOn" text="LAN On" />
                   <MenuItem mnemonicParsing="false" onAction="#handleLANOff" text="LAN Off" />
-                  <MenuItem mnemonicParsing="false" text="Bluetooth" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleBluetooth" text="Bluetooth" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

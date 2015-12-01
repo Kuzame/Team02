@@ -1,6 +1,7 @@
 package FanManager.view;
 
 import FanManager.FanManager;
+import FanManager.MyRxTx;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +17,7 @@ import javafx.scene.control.Alert;
 public class RootLayoutController {
     
     private static boolean networkOn = false;
+    private static boolean bluetoothOn = false;
 
     
     
@@ -62,28 +64,47 @@ public class RootLayoutController {
            System.out.println("handleLANOff");
     }
 
-    private static class Networking implements Runnable {
+    @FXML
+    private void handleBluetooth() throws IOException {
+        Thread mySerial = new Thread(new MyRxTx(this));
 
-        public Networking() {
-
-        }
-
-        @Override
-        public void run() {
-                        System.out.println("In Run");
+           if (bluetoothOn == false)
+           {
+                bluetoothOn = true;
+                mySerial.setDaemon(true);
+                mySerial.start();
+           }
+           else
+           {
+                bluetoothOn = false;
+           }
+           
+           System.out.println("handleBluetooth");
+    }
+    
+    
+//    private static class Networking implements Runnable {
 //
-//            SingleThreadedServer server = new SingleThreadedServer(8000);
-//            new Thread(server).start();
+//        public Networking() {
 //
-//            try {
-//                Thread.sleep(10 * 1000);
-//            } catch (InterruptedException e) {
-//            e.printStackTrace();  
-//}
-//            System.out.println("Stopping Server");
-//            server.stop();
-        }
-        }
+//        }
+//
+//        @Override
+//        public void run() {
+//                        System.out.println("In Run");
+////
+////            SingleThreadedServer server = new SingleThreadedServer(8000);
+////            new Thread(server).start();
+////
+////            try {
+////                Thread.sleep(10 * 1000);
+////            } catch (InterruptedException e) {
+////            e.printStackTrace();  
+////}
+////            System.out.println("Stopping Server");
+////            server.stop();
+//        }
+//        }
 
 
 }

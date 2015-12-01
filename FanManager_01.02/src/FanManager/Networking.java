@@ -51,14 +51,21 @@ public class Networking implements Runnable {
             server = new ServerSocket(8000);
             System.out.println("Server started at " + new Date() + '\n');
             client = server.accept();
+            System.out.println("client = Server accepted");
 
             // Create an output stream to send data to the server
             toClient = new ObjectOutputStream(client.getOutputStream());
+            System.out.println("toClient: " + toClient + '\n');
+            
             toClient.flush();
-
+            System.out.println("toClient flush: " + toClient + '\n');
+ 
             // Create an input stream to receive data from the server
             fromClient = new ObjectInputStream(client.getInputStream());
-            
+            System.out.println("fromClient: " + fromClient + '\n');
+                System.out.println(fromClient.readObject());
+
+
             fanList.addListener(new ListChangeListener() {
                 @Override
                 public void onChanged(ListChangeListener.Change change) {
