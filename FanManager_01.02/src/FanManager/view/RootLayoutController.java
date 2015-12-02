@@ -67,12 +67,12 @@ public class RootLayoutController {
     @FXML
     private void handleBluetooth() throws IOException {
         Thread mySerial = new Thread(new MyRxTx(this));
+                mySerial.setDaemon(true);
+                mySerial.start();
 
            if (bluetoothOn == false)
            {
                 bluetoothOn = true;
-                mySerial.setDaemon(true);
-                mySerial.start();
            }
            else
            {
@@ -82,29 +82,16 @@ public class RootLayoutController {
            System.out.println("handleBluetooth");
     }
     
-    
-//    private static class Networking implements Runnable {
-//
-//        public Networking() {
-//
-//        }
-//
-//        @Override
-//        public void run() {
-//                        System.out.println("In Run");
-////
-////            SingleThreadedServer server = new SingleThreadedServer(8000);
-////            new Thread(server).start();
-////
-////            try {
-////                Thread.sleep(10 * 1000);
-////            } catch (InterruptedException e) {
-////            e.printStackTrace();  
-////}
-////            System.out.println("Stopping Server");
-////            server.stop();
-//        }
-//        }
+     
+    @FXML
+    private void handleConsole() throws IOException {
+//    console.add( new JScrollPane( textComponent ) );
+//    MessageConsole mc = new MessageConsole(textComponent);
+//    mc.redirectOut();
+//    mc.redirectErr(Color.RED, null);
+//    mc.setMessageLines(100);        
+        System.out.println("handleConsole");
+    }
 
 
 }

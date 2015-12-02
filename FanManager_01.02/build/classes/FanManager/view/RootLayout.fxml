@@ -14,6 +14,11 @@
               <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleConsole" text="Console" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Connections">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleLANOn" text="LAN On" />
