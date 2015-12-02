@@ -9,6 +9,7 @@ import FanManager.model.Fan;
 import FanManager.model.FanGroup;
 import FanManager.model.FanPane;
 import FanManager.Networking;
+import FanManager.TCPClient;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -73,6 +74,11 @@ public class FanManagerLayoutController implements Initializable {
         Thread networking = new Thread(new Networking(this));
         networking.setDaemon(true);
         networking.start();
+        
+        Thread mySerial = new Thread(new TCPClient(this));
+        mySerial.setDaemon(true);
+        mySerial.start();
+
 
         // Add tile pane to scroll pane
         scrollPane.setContent(tilePane);

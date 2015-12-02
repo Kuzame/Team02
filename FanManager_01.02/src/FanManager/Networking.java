@@ -90,7 +90,7 @@ public class Networking implements Runnable {
 
     private void recieveData() {
         try {
-            while (true) {
+//            while (true) {
                 System.out.println("Waiting for object");
                 // Read from network
                 FanGroup temp = (FanGroup) fromClient.readObject();
@@ -110,7 +110,7 @@ public class Networking implements Runnable {
                 }
 
                 Thread.sleep(1000);
-            }
+//            }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -131,7 +131,7 @@ public class Networking implements Runnable {
     private void sendData() {
         try {
                 toClient.reset();
-                System.out.println("sending data");
+                System.out.println("sending data from manager");
                 fanGroup = mainApp.getFanGroup();
                 //System.out.println(fanGroup.getFans().get(0).getSpeed());
 
@@ -139,7 +139,7 @@ public class Networking implements Runnable {
                 toClient.writeObject(fanGroup);
                 toClient.flush();
                 
-                System.out.println("data sent");
+                System.out.println("data sent from manager");
 
                 
         } catch (Exception ex) {

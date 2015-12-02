@@ -2,6 +2,7 @@ package FanManager.view;
 
 import FanManager.FanManager;
 import FanManager.MyRxTx;
+import FanManager.TCPClient;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -66,9 +67,9 @@ public class RootLayoutController {
 
     @FXML
     private void handleBluetooth() throws IOException {
-        Thread mySerial = new Thread(new MyRxTx(this));
-                mySerial.setDaemon(true);
-                mySerial.start();
+//        Thread mySerial = new Thread(new TCPClient(this));
+//                mySerial.setDaemon(true);
+//                mySerial.start();
 
            if (bluetoothOn == false)
            {
