@@ -63,7 +63,6 @@ public class Networking implements Runnable {
             // Create an input stream to receive data from the server
             fromClient = new ObjectInputStream(client.getInputStream());
             System.out.println("fromClient: " + fromClient + '\n');
-                System.out.println(fromClient.readObject());
 
 
             fanList.addListener(new ListChangeListener() {
