@@ -10,17 +10,19 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 
 public class ConsoleController implements Initializable {
 
 @Override
 public void initialize(URL url, ResourceBundle resourceBundle) {
+    
 }
 
-@FXML
+/*@FXML
 public void append(int i) {
-    textArea.appendText(String.valueOf((char) i));
-}
+textArea.appendText(String.valueOf((char) i));
+}*/
 
 @FXML
 private TextArea textArea;

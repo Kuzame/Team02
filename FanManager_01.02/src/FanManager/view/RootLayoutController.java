@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 /**
@@ -30,12 +30,12 @@ public class RootLayoutController {
     // Opens an about dialog.
     @FXML
     private void handleAbout() {
-    	Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    	alert.setTitle("FanManager");
-    	alert.setHeaderText("About");
-    	alert.setContentText("Author: CS56 Team 02 Fall 2015\nReign DeRenzo   Website: www.reign-tech.com\nFelix\nChad\nKristen\nAdrian\nOmid\nDishon\nJorge\nPLEASE FILL THIS IN!!!");
-
-    	alert.showAndWait();
+        /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("FanManager");
+        alert.setHeaderText("About");
+        alert.setContentText("Author: CS56 Team 02 Fall 2015\nReign DeRenzo   Website: www.reign-tech.com\nFelix\nChad\nKristen\nAdrian\nOmid\nDishon\nJorge\nPLEASE FILL THIS IN!!!");
+        
+        alert.showAndWait();*/
     }
     // Closes the application.
     @FXML
@@ -112,7 +112,14 @@ public class RootLayoutController {
 //        ResourceBundle rb = p;
 //
 
-        showConsole();
+        //showConsole();
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Console.fxml"));
+        Parent root = (Parent) loader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root, 320, 200));
+        stage.show();
+        
     }
 
         public void showConsole() {
