@@ -3,7 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/Reign/git/Final/Team02/FanManager_01.02/src/FanManager/view/Console.java</file>
+            <file>file:/Users/Reign/git/Final/Team02/FanManager_01.02/src/FanManager/view/ConsoleController.java</file>
+            <file>file:/Users/Reign/git/Final/Team02/FanManager_01.02/src/FanManager/view/FanManagerLayoutController.java</file>
             <file>file:/Users/Reign/git/Final/Team02/FanManager_01.02/src/FanManager/Networking.java</file>
+            <file>file:/Users/Reign/git/Final/Team02/FanManager_01.02/src/FanManager/FanManager.java</file>
+            <file>file:/Users/Reign/git/Final/Team02/FanManager_01.02/src/FanManager/TCPClient.java</file>
+            <file>file:/Users/Reign/git/Final/Team02/FanManager_01.02/src/FanManager/view/RootLayoutController.java</file>
+            <file>file:/Users/Reign/git/Final/Team02/FanManager_01.02/src/FanManager/FreqInputField.java</file>
         </group>
     </open-files>
 </project-private>

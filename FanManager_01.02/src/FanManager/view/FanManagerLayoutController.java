@@ -84,6 +84,7 @@ public class FanManagerLayoutController implements Initializable {
         scrollPane.setContent(tilePane);
         scrollPane.getStylesheets().add("FanManager/view/knobObject.css");
 
+       
     }
 
     public ObservableList<Fan> getFanList() {
@@ -106,3 +107,4 @@ public class FanManagerLayoutController implements Initializable {
     }
 
    }
+

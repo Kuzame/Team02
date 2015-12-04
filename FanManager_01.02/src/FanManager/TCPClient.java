@@ -58,7 +58,7 @@ public class TCPClient implements Runnable {
             // Create an input stream to receive data from the server
             fromClient = new ObjectInputStream(client.getInputStream());
             System.out.println("fromClient: " + fromClient + '\n');
-                System.out.println(fromClient.readObject());
+//                System.out.println(fromClient.readObject());
 
             fanList.addListener(new ListChangeListener() {
                 @Override
@@ -93,6 +93,8 @@ public class TCPClient implements Runnable {
                System.err.println(ce);
            } catch (Exception ex) {
                System.out.println("Bad TCPClient Connection");
+                              System.err.println(ex);
+
            }
         }
     
@@ -101,12 +103,15 @@ public class TCPClient implements Runnable {
             while (true) {
                 System.out.println("Waiting for object");
                 // Read from network
-                FanGroup temp = (FanGroup) fromClient.readObject();
+                FanGroup theObject = (FanGroup) fromClient.readObject();
+//    System.setErr(new PrintStream(Console.getInstance(theObject)));
+                
+                
                 System.out.println("Recieved object");
                 
                 // If new fanGroup sent over, then update each fan
-                if (!fanGroup.equals(temp)) {
-                    fanGroup.update(temp);
+                if (!fanGroup.equals(theObject)) {
+                    fanGroup.update(theObject);
                     
                     // Update fan animations
                     for (int i = 0; i < fanGroup.getFans().size(); i++) {

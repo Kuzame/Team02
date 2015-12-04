@@ -1,14 +1,17 @@
 package FanManager.view;
 
-import FanManager.FanManager;
-import FanManager.MyRxTx;
-import FanManager.TCPClient;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -19,6 +22,8 @@ public class RootLayoutController {
     
     private static boolean networkOn = false;
     private static boolean bluetoothOn = false;
+    private Stage consoleStage;
+    private PrintStream printStream;
 
     
     
@@ -86,13 +91,62 @@ public class RootLayoutController {
      
     @FXML
     private void handleConsole() throws IOException {
-//    console.add( new JScrollPane( textComponent ) );
-//    MessageConsole mc = new MessageConsole(textComponent);
-//    mc.redirectOut();
-//    mc.redirectErr(Color.RED, null);
-//    mc.setMessageLines(100);        
+
+//        System.setErr(new PrintStream(Console.getInstance(rb)));
+
         System.out.println("handleConsole");
+//                FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(FanManager.class.getResource("view/Console.fxml"));
+//        loader.setResources(new ResourceBundle(){  
+//      // Just a dummy resource bundle...  
+//            @Override  
+//            protected Object handleGetObject(String key) {  
+//                return key;  
+//            }  
+//            @Override  
+//            public Enumeration<String> getKeys() {  
+//                return null;  
+//            }     
+//        });
+//        Parent p = (Parent) loader.load(); 
+//        ResourceBundle rb = p;
+//
+
+        showConsole();
     }
 
+        public void showConsole() {
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("view/Console.fxml");
+            URL fxmlUrl = this.getClass() .getClassLoader() .getResource("view/Console.fxml"); 
 
+//            System.setErr(new PrintStream(Console.getInstance(resourceBundle)));
+       
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Console.fxml"));
+    ConsoleController controller = new ConsoleController();
+    loader.setController(controller);
+    loader.setRoot(controller);
+    Parent root;
+    try {
+        root = (Parent) loader.load();
+        Scene scene = new Scene(root, 320, 200);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    } catch (IOException ex) {
+        Logger.getLogger(ConsoleController.class.getName()).log(Level.SEVERE, null, ex);
+    }    
+        System.out.println("showConsole");
+//        Parent p = (Parent) loader.load(); 
+////        RootViewController = loader.getController();
+//        Scene scene = new Scene(p);
+//        consoleStage = new Stage();
+//        consoleStage.setScene(scene);
+//        consoleStage.show();
+
+
+//    } catch (IOException e) {
+//        e.printStackTrace();
+//    }
+//
+    }
 }

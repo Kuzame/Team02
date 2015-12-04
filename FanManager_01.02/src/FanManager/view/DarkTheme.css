@@ -26,6 +26,13 @@
     -fx-background-color: #000000;
     -fx-text-fill: white;
 }
+
+.text-area *.content{
+    -fx-border-color: transparent #1d1d1d transparent #1d1d1d;
+    -fx-background-color: transparent, derive(#1d1d1d,20%);
+    -fx-text-fill: white;
+  }
+
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
