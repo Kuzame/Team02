@@ -28,8 +28,8 @@
 }
 
 .text-area *.content{
-    -fx-border-color: transparent #1d1d1d transparent #1d1d1d;
-    -fx-background-color: transparent, derive(#1d1d1d,20%);
+    -fx-border-color: transparent;
+    -fx-background-color: transparent, derive(#FFFFFF,20%);
     -fx-text-fill: white;
   }
 

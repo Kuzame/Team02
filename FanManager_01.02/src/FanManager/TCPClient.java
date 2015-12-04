@@ -23,7 +23,7 @@ import javafx.collections.ObservableList;
 public class TCPClient implements Runnable {  
 
     private ObjectOutputStream toClient;
-    private ObjectInputStream fromClient;
+    private DataInputStream fromClient;
     private ServerSocket server;
     private Socket client;
 
@@ -56,7 +56,7 @@ public class TCPClient implements Runnable {
             System.out.println("toClient flush: " + toClient + '\n');
  
             // Create an input stream to receive data from the server
-            fromClient = new ObjectInputStream(client.getInputStream());
+            fromClient = new DataInputStream(client.getInputStream());
             System.out.println("fromClient: " + fromClient + '\n');
 //                System.out.println(fromClient.readObject());
 
@@ -103,15 +103,17 @@ public class TCPClient implements Runnable {
             while (true) {
                 System.out.println("Waiting for object");
                 // Read from network
-                FanGroup theObject = (FanGroup) fromClient.readObject();
+                int theObject = fromClient.read();
+//                FanGroup theObject = (FanGroup) fromClient.readObject();
 //    System.setErr(new PrintStream(Console.getInstance(theObject)));
                 
                 
-                System.out.println("Recieved object");
-                
+                System.out.println("Recieved char");
+                System.out.println(theObject);
+
                 // If new fanGroup sent over, then update each fan
                 if (!fanGroup.equals(theObject)) {
-                    fanGroup.update(theObject);
+//                    fanGroup.update(theObject);
                     
                     // Update fan animations
                     for (int i = 0; i < fanGroup.getFans().size(); i++) {
@@ -122,7 +124,7 @@ public class TCPClient implements Runnable {
                     }
                 }
 
-                Thread.sleep(1000);
+                Thread.sleep(10);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

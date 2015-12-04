@@ -122,38 +122,5 @@ public class RootLayoutController {
         
     }
 
-        public void showConsole() {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle("view/Console.fxml");
-            URL fxmlUrl = this.getClass() .getClassLoader() .getResource("view/Console.fxml"); 
 
-//            System.setErr(new PrintStream(Console.getInstance(resourceBundle)));
-       
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Console.fxml"));
-    ConsoleController controller = new ConsoleController();
-    loader.setController(controller);
-    loader.setRoot(controller);
-    Parent root;
-    try {
-        root = (Parent) loader.load();
-        Scene scene = new Scene(root, 320, 200);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-    } catch (IOException ex) {
-        Logger.getLogger(ConsoleController.class.getName()).log(Level.SEVERE, null, ex);
-    }    
-        System.out.println("showConsole");
-//        Parent p = (Parent) loader.load(); 
-////        RootViewController = loader.getController();
-//        Scene scene = new Scene(p);
-//        consoleStage = new Stage();
-//        consoleStage.setScene(scene);
-//        consoleStage.show();
-
-
-//    } catch (IOException e) {
-//        e.printStackTrace();
-//    }
-//
-    }
 }
