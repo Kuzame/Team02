@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="FanManager_01.02_FXML_.jar" size="104749" download="eager" />
+    <jar href="FanManager_01.02_FXML_.jar" size="104531" download="eager" />
     <jar href="lib/jfxrt2.jar" size="13517898" download="eager" />
     <jar href="lib/rxtx-2.1.7.jar" size="59464" download="eager" />
   </resources>
