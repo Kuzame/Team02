@@ -16,8 +16,8 @@ import FanManager.view.FanManagerLayoutController;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.ConnectException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -35,8 +35,23 @@ public class TCPClient implements Runnable {
 
     private ServerSocket server;
     private Socket client;
-
     private String consoleData; // logs data from prototype
+
+    private double f1Speed = 0;
+    private double f2Speed = 0;
+    private double f3Speed = 0;
+
+    private String FS1 = "";
+    private String FS2 = "";
+    private String FS3 = "";
+
+    private double f1Freq = 0;
+    private double f2Freq = 0;
+    private double f3Freq = 0;
+
+    private String FF1 = "";
+    private String FF2 = "";
+    private String FF3 = "";
 
     private FanManagerLayoutController mainApp;
     private FanGroup fanGroup;
@@ -68,9 +83,8 @@ public class TCPClient implements Runnable {
             fromPrototype = new DataInputStream(client.getInputStream());
             System.out.println("fromPrototype: " + fromPrototype + '\n');
 //                System.out.println(fromClient.readObject());
-            
+
             toPrototype = new DataOutputStream(client.getOutputStream());
-            
 
             fanList.addListener(new ListChangeListener() {
                 @Override
@@ -160,24 +174,68 @@ public class TCPClient implements Runnable {
 
     private void sendData() {
         try {
-            
-            
+
             System.out.println("sending data");
             fanGroup = mainApp.getFanGroup();
-            int intSpeed = (int)fanGroup.getFans().get(0).getSpeed();
-            char charSpeed = (char)intSpeed;
+
+            f1Speed = (double) fanGroup.getFans().get(0).getSpeed();
+            f2Speed = (double) fanGroup.getFans().get(1).getSpeed();
+            f3Speed = (double) fanGroup.getFans().get(2).getSpeed();
+
+            FS1 += round(f1Speed, 0);;
+            FS2 += round(f2Speed, 0);;
+            FS3 += round(f3Speed, 0);;
             
-            System.out.println(fanGroup.getFans().get(0).getSpeed());
+            System.out.println("FS1: " + FS1);
+            System.out.println("FS2: " + FS2);
+            System.out.println("FS3: " + FS3);
+
+            f1Freq = (double) fanGroup.getFans().get(0).getFreq();
+            f2Freq = (double) fanGroup.getFans().get(1).getFreq();
+            f3Freq = (double) fanGroup.getFans().get(2).getFreq();
+
+            FF1 += round(f1Freq, 0);;
+            FF2 += round(f2Freq, 0);;
+            FF3 += round(f3Freq, 0);;
+            
+            System.out.println("FF1: " + FF1);
+            System.out.println("FF2: " + FF2);
+            System.out.println("FF3: " + FF3);
+
+//            System.out.println(fanGroup.getFans().get(0).getSpeed());
 
             // Write to network
-            toPrototype.write(intSpeed);
-            toPrototype.flush();
+//            toPrototype.writeUTF("<FS1><" + FS1 + ">,<FS2><" + FS2 + ">,<FS3><" + FS3 + ">,<FF1><" + FF1 + ">,<FF2><" + FF2 + ">,<FF3><" + FF3 + "-------->\n");
+            toPrototype.writeBytes("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "F");
 
-            
             System.out.println("data sent");
-
+            toPrototype.flush();
+            f1Speed = 0;
+            f2Speed = 0;
+            f3Speed = 0;
+            FS1 = "";
+            FS2 = "";
+            FS3 = "";
+            f1Freq = 0;
+            f2Freq = 0;
+            f3Freq = 0;
+            FF1 = "";
+            FF2 = "";
+            FF3 = "";
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
     }
+
+    public static double round(double value, int places) {
+        if (places < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
 }

@@ -118,7 +118,7 @@ public class FanGroup implements Serializable {
             result = result
                     + String.format("f%d[%d,%.2f];", (i + 1),
                             fans.get(i).getSpeed(),
-                            fans.get(i).getDuty());
+                            fans.get(i).getFreq());
         }
 
         result = result + "end\n";

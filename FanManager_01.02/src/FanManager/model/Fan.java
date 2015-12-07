@@ -17,7 +17,7 @@ public class Fan implements Serializable {
     private boolean isOn;
     private double power;
 
-    private double duty;
+    private double freq;
     private double speed;
 
     private double minStartingTemp;
@@ -34,9 +34,9 @@ public class Fan implements Serializable {
         this(0.0, 0.0, 0.0, 70, 60, 0.0, 100.0, 70.0);
     }
     
-    public Fan(double speed, Fan f){
+    public Fan(double speed, double freq, Fan f){
         this.power = f.power;
-        this.duty = f.duty;
+        this.freq = f.freq;
         this.minStartingTemp = f.minStartingTemp;
         this.minRunningTemp = f.minRunningTemp;
         this.minSpeed = f.minSpeed;
@@ -46,13 +46,13 @@ public class Fan implements Serializable {
         setSpeed(speed);        
     }
 
-    public Fan(double power, double duty, double speed,
+    public Fan(double power, double freq, double speed,
             double minStartingTemp, double minRunningTemp,
             double minSpeed, double maxSpeed, double temperature) {
         super();
 
         this.power = power;
-        this.duty = duty;
+        this.freq = freq;
         this.minStartingTemp = minStartingTemp;
         this.minRunningTemp = minRunningTemp;
         this.minSpeed = minSpeed;
@@ -68,25 +68,25 @@ public class Fan implements Serializable {
         isOn = false;
 
         this.power = 0;
-        this.duty = 0;
+        this.freq = 40;
         setSpeed(0);
     }
 
     // Turn On
     //
-    public void turnOn(double power, double duty, double speed) {
+    public void turnOn(double power, double freq, double speed) {
         isOn = true;
 
         this.power = power;
-        this.duty = duty;
+        this.freq = freq;
         setSpeed(speed);
     }
 
-    public void turnOn(double power, double duty) {
+    public void turnOn(double power, double freq) {
         isOn = true;
 
         this.power = power;
-        this.duty = duty;
+        this.freq = freq;
         setSpeed(minSpeed);
     }
 
@@ -106,13 +106,13 @@ public class Fan implements Serializable {
         this.power = power;
     }
 
-    // Duty
-    public double getDuty() {
-        return duty;
+    // Freq
+    public double getFreq() {
+        return freq;
     }
 
-    public void setDuty(double duty) {
-        this.duty = duty;
+    public void setFreq(double freq) {
+        this.freq = freq;
     }
 
     // Speed
@@ -181,7 +181,7 @@ public class Fan implements Serializable {
             Fan temp = (Fan) obj;
             if (this.isOn == temp.isOn
                     && this.power == temp.power
-                    && this.duty == temp.duty
+                    && this.freq == temp.freq
                     && this.speed == temp.speed
                     && this.minStartingTemp == temp.minStartingTemp
                     && this.minRunningTemp == temp.minRunningTemp

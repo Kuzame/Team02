@@ -64,7 +64,7 @@ public class FanPane extends FlowPane {
 
     public FanPane(FanManagerLayoutController mainApp) {
         this.mainApp = mainApp;
-        
+
         // Create an individual ID for Fan Pane
         id = nextId++;
 
@@ -171,10 +171,20 @@ public class FanPane extends FlowPane {
                             speedInputLabel.setText((speedKnob.getValue()) + "");
 
                             //fan.setSpeed(speedKnob.getValue());
-                            mainApp.updateFanList(speedKnob.getValue(), id);
-                            System.out.println("Fan updated");
+                            mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), id);
+                            System.out.println("Speed updated");
                         }
+                        if (!freqKnob.isValueChanging()) {
+                            if (newValue == null) {
+                                speedInputLabel.setText("");
+                                return;
+                            }
+                            speedInputLabel.setText((speedKnob.getValue()) + "");
 
+                            //fan.setSpeed(speedKnob.getValue());
+                            mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), id);
+                            System.out.println("Freq updated");
+                        }
                     }
                 });
             }
@@ -195,7 +205,6 @@ public class FanPane extends FlowPane {
                 speedKnob,
                 freqField,
                 freqKnob
-
         );
 
         // Add main content to pane
