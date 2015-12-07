@@ -108,7 +108,7 @@ public class Networking implements Runnable {
                     }
                 }
 
-                Thread.sleep(1000);
+                Thread.sleep(10);
 //            }
         } catch (Exception ex) {
             ex.printStackTrace();
