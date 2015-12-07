@@ -100,7 +100,7 @@ public class FanManagerLayoutController implements Initializable {
         return fanPanes;
     }
 
-    public void updateFanList(double speed,double freq ,int id) {
+    public synchronized void updateFanList(double speed, double freq, int id) {
         //fanList.get(id).setSpeed(speed);
         fanList.set(id, new Fan(speed, freq, fanList.get(id)));
 //        fanList.set(id, new Fan(freq, fanList.get(id)));
