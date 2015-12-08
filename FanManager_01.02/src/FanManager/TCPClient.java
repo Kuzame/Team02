@@ -25,6 +25,7 @@ import java.net.SocketException;
 import java.util.Date;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import static javax.lang.model.type.TypeKind.BYTE;
 
 public class TCPClient implements Runnable {
 
@@ -35,7 +36,7 @@ public class TCPClient implements Runnable {
 
     private ServerSocket server;
     private Socket client;
-    private String consoleData; // logs data from prototype
+    private String consoleData = ""; // logs data from prototype
 
     private double f1Speed = 0;
     private double f2Speed = 0;
@@ -128,14 +129,14 @@ public class TCPClient implements Runnable {
             while (true) {
 //                System.out.println("Waiting for object");
                 // Read from network
-//                char someInt = fromPrototype.readChar();
-                char someInt = (char) fromPrototype.read();
+                char someInt = fromPrototype.readChar();
+                consoleData = fromPrototype.readUTF();
                 consoleData += someInt;
-                if (someInt == '\r') {
-                    //data += "\n";
+//                if (someByte == '\n') {
+//                    //data += "\n";
                     System.out.println(consoleData);
-
-                }
+                    consoleData = "";
+//                }
 //                FanGroup temp = (FanGroup) fromClient.readObject();
 //                System.setErr(new PrintStream(Console.getInstance(theObject)));
 
@@ -207,7 +208,8 @@ public class TCPClient implements Runnable {
             // Write to network
 //            toPrototype.writeUTF("<FS1><" + FS1 + ">,<FS2><" + FS2 + ">,<FS3><" + FS3 + ">,<FF1><" + FF1 + ">,<FF2><" + FF2 + ">,<FF3><" + FF3 + "-------->\n");
             toPrototype.writeBytes("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "F");
-
+//            System.out.println("data received");
+//            System.out.println(fromPrototype);
             System.out.println("data sent");
             toPrototype.flush();
             f1Speed = 0;

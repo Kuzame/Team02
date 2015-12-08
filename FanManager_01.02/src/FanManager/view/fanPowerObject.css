@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 7, 2015, 5:11:46 PM
+    Author     : Reign
+*/
+
+        #fanPower.buttonStyle .fanButton(
+                "-fx-background-color: transparent, derive(#1d1d1d,20%); "
+                + "-fx-background-radius: 5em; "
+                + "-fx-min-width: 50px; "
+                + "-fx-min-height: 50px; "
+                + "-fx-max-width: 50px; "
+                + "-fx-max-height: 50px;"
+//                + "-fx-background-color: -fx-body-color;"
+                + "-fx-background-insets: 0px; "
+                + "-fx-padding: 0px;"
+        )
+ 

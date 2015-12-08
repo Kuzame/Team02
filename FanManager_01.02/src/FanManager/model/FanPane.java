@@ -16,6 +16,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -156,6 +157,22 @@ public class FanPane extends FlowPane {
         speedInputLabel.setText(Math.round(speedKnob.getValue()) + "");
         speedInputLabel.setText(Math.round(gauge.getValue()) + "");
 
+        Button powerButton = new Button();
+powerButton.setStyle(
+        "-fx-background-radius: 5em; " +
+        "-fx-min-width: 50px; " +
+        "-fx-min-height: 50px; " +
+        "-fx-max-width: 50px; " +
+        "-fx-max-height: 50px; " +
+        "-fx-background-color: -fx-body-color;" +
+        "-fx-background-insets: 0px; " +
+        "-fx-padding: 0px;"
+);//        powerButton.setId("fanButton");
+//        powerButton.getStyleClass().add("fanPower");
+
+        powerButton.setTranslateX((int) (WIDTH / 24) + 100);
+        powerButton.setTranslateY((int) (HEIGHT / 32) + 200);
+
         speedKnob.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
@@ -204,7 +221,8 @@ public class FanPane extends FlowPane {
                 speedInputLabel,
                 speedKnob,
                 freqField,
-                freqKnob
+                freqKnob,
+                powerButton
         );
 
         // Add main content to pane
