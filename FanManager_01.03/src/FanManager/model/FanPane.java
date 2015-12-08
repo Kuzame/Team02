@@ -58,7 +58,7 @@ public class FanPane extends FlowPane {
     private Slider freqKnob;
 
     // Label
-    final private Label speedInputLabel = new Label();
+    final private Label tempLabel = new Label();
 
     // Fan Object
     private Fan fan;
@@ -126,12 +126,12 @@ public class FanPane extends FlowPane {
 
         // Speed Input Label
         // Create input label
-        speedInputLabel.setStyle("-fx-color: white");
-        speedInputLabel.setStyle("-fx-font: 12 arial;");
-        speedInputLabel.setStyle("-fx-background-color: grey");
-        speedInputLabel.setTranslateX((int) (WIDTH / 16));
-        speedInputLabel.setTranslateY((int) (HEIGHT / 32 + 280));
-        speedInputLabel.setPrefWidth(50);
+        tempLabel.setStyle("-fx-color: white");
+        tempLabel.setStyle("-fx-font: 12 arial;");
+        tempLabel.setStyle("-fx-background-color: grey");
+        tempLabel.setTranslateX((int) (WIDTH / 16));
+        tempLabel.setTranslateY((int) (HEIGHT / 32 + 280));
+        tempLabel.setPrefWidth(50);
 
         // Frequency        
         // Create and style frequency label
@@ -157,9 +157,9 @@ public class FanPane extends FlowPane {
         freqField.setTranslateY((int) (HEIGHT / 32) + 560);
         freqField.valueProperty().bindBidirectional(freqKnob.valueProperty());
 
-        // Get values from speedKnob and the gauge to display in the input label
-        speedInputLabel.setText(Math.round(speedKnob.getValue()) + "");
-        speedInputLabel.setText(Math.round(gauge.getValue()) + "");
+//        // Get values from speedKnob and the gauge to display in the input label
+        speedField.setText(Math.round(speedKnob.getValue()) + "");
+        speedField.setText(Math.round(gauge.getValue()) + "");
 
         Button powerButton = new Button();
         powerButton.setStyle(
@@ -226,7 +226,6 @@ public class FanPane extends FlowPane {
         });
 
        
-
         speedKnob.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
@@ -236,21 +235,33 @@ public class FanPane extends FlowPane {
                     public void run() {
                         if (!speedKnob.isValueChanging()) {
                             if (newValue == null) {
-                                speedInputLabel.setText("");
+                                speedField.setText("");
                                 return;
                             }
-                            speedInputLabel.setText((speedKnob.getValue()) + "");
+                            speedField.setText((speedKnob.getValue()) + "");
 
                             //fan.setSpeed(speedKnob.getValue());
                             mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), id);
                             System.out.println("Speed updated");
                         }
+                    }
+                });
+            }
+        });
+        
+        freqKnob.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
                         if (!freqKnob.isValueChanging()) {
                             if (newValue == null) {
-                                speedInputLabel.setText("");
+                                freqField.setText("");
                                 return;
                             }
-                            speedInputLabel.setText((speedKnob.getValue()) + "");
+                            freqField.setText((freqKnob.getValue()) + "");
 
                             //fan.setSpeed(speedKnob.getValue());
                             mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), id);
@@ -260,7 +271,8 @@ public class FanPane extends FlowPane {
                 });
             }
         });
-
+        
+        
         // Create background fill
         Rectangle background = new Rectangle(WIDTH, HEIGHT, Color.BLACK);
         background.setStroke(Color.WHITE);
@@ -272,7 +284,7 @@ public class FanPane extends FlowPane {
                 gauge,
                 speedLabel,
                 speedField,
-                speedInputLabel,
+                tempLabel,
                 speedKnob,
                 freqField,
                 freqKnob,
@@ -383,5 +395,9 @@ public class FanPane extends FlowPane {
     {
         return speedKnob;
     }
- 
+    public Slider getFreqKnob()
+    {
+        return freqKnob;
+    }
+
 }

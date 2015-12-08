@@ -142,7 +142,7 @@ public class TCPClient implements Runnable {
 //                System.out.println("Fan1 Temp: " + f1Temp);
 
                 FT2 = parts[4]; // Fan2 Temp
-                f2Temp = Double.parseDouble(FT3);
+                f2Temp = Double.parseDouble(FT2);
 //                System.out.println("Fan2 Temp: " + f2Temp);
 
                 FT3 = parts[5]; // Fan3 Temp
@@ -211,8 +211,8 @@ public class TCPClient implements Runnable {
 //            System.out.println("FF3: " + FF3);
 //            System.out.println(fanGroup.getFans().get(0).getSpeed());
             // Write to network
-//            toPrototype.writeUTF("<FS1><" + FS1 + ">,<FS2><" + FS2 + ">,<FS3><" + FS3 + ">,<FF1><" + FF1 + ">,<FF2><" + FF2 + ">,<FF3><" + FF3 + "-------->\n");
-            toPrototype.writeBytes("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "F");
+            toPrototype.writeUTF(FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "\n");
+//            toPrototype.writeBytes("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "F");
             System.out.println("data sent");
             toPrototype.flush();
             f1Speed = 0;

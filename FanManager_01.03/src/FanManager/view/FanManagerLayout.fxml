@@ -25,7 +25,7 @@
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="°F" BorderPane.alignment="CENTER" />
          </right>
          <center>
-            <TextField fx:id="temperatureLabel" prefHeight="25.0" prefWidth="65.0" text="69.94" BorderPane.alignment="CENTER" />
+            <TextField fx:id="temperatureLabel" prefHeight="25.0" prefWidth="65.0" text="XX.XX" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
       <BorderPane layoutX="215.0" layoutY="6.0" prefHeight="44.0" prefWidth="136.0" stylesheets="@DarkTheme.css">
@@ -33,7 +33,7 @@
             <Label text="Humidity:" BorderPane.alignment="CENTER" />
          </left>
          <center>
-            <TextField fx:id="humidityLabel" prefHeight="24.0" prefWidth="52.0" text="55.54" BorderPane.alignment="CENTER" />
+            <TextField fx:id="humidityLabel" prefHeight="24.0" prefWidth="52.0" text="XX.XX" BorderPane.alignment="CENTER" />
          </center>
          <right>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="1.0" BorderPane.alignment="CENTER" />
@@ -47,7 +47,7 @@
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Hg" BorderPane.alignment="CENTER" />
          </right>
          <center>
-            <TextField fx:id="barometerLabel" prefHeight="17.0" prefWidth="68.0" text="29.35" BorderPane.alignment="CENTER" />
+            <TextField fx:id="barometerLabel" prefHeight="17.0" prefWidth="68.0" text="XX.XX" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
       <Button layoutX="853.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleSystemOff" prefHeight="33.0" prefWidth="143.0" text="System OFF" />
