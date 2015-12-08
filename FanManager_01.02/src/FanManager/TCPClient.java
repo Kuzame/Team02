@@ -53,6 +53,14 @@ public class TCPClient implements Runnable {
     private String FF2 = "";
     private String FF3 = "";
 
+    private double f1Temp = 0;
+    private double f2Temp = 0;
+    private double f3Temp = 0;
+
+    private String FT1 = "";
+    private String FT2 = "";
+    private String FT3 = "";
+
     private double mainTemp = 0;
     private double mainHumid = 0;
     private double mainBarometer = 0;
@@ -115,46 +123,54 @@ public class TCPClient implements Runnable {
                 // Read from network
                 String someLine = fromPrototype.readLine();
 
-
-                
                 String[] parts = someLine.split(",");
-                
+
                 mainTempIn = parts[0]; // Temp
                 mainTemp = Double.parseDouble(mainTempIn);
-                System.out.println("Temp: " + mainTemp);
+//                System.out.println("Temp: " + mainTemp);
 
                 mainHumidIn = parts[1]; // Humidity
                 mainHumid = Double.parseDouble(mainHumidIn);
-                System.out.println("Humidity: " + mainHumid);
+//                System.out.println("Humidity: " + mainHumid);
 
                 mainBarometerIn = parts[2]; // Barometer
                 mainBarometer = Double.parseDouble(mainBarometerIn);
-                System.out.println("Barometer: " + mainBarometer);
-                
-            fanGroup = mainApp.getFanGroup();
+//                System.out.println("Barometer: " + mainBarometer);
 
-            fanGroup.setTemperature(mainTemp);
-            fanGroup.setHumidity(mainHumid);
-            fanGroup.setBarometricPressure(mainBarometer);
-            
-//            System.out.println("mainTempIn: " + mainTempIn);
-//            System.out.println("mainHumidIn: " + mainHumidIn);
-//            System.out.println("mainBarometerIn: " + mainBarometerIn);
-               
-//              mainApp.updateTempList(mainTemp, mainHumid, mainBarometer);  
-//              mainApp.(mainTemp, mainHumid, mainBarometer);
-                
+                FT1 = parts[3]; // Fan1 Temp
+                f1Temp = Double.parseDouble(FT1);
+//                System.out.println("Fan1 Temp: " + f1Temp);
+
+                FT2 = parts[4]; // Fan2 Temp
+                f2Temp = Double.parseDouble(FT3);
+//                System.out.println("Fan2 Temp: " + f2Temp);
+
+                FT3 = parts[5]; // Fan3 Temp
+                f3Temp = Double.parseDouble(FT3);
+//                System.out.println("Fan3 Temp: " + f2Temp);
+
+                fanGroup = mainApp.getFanGroup();
+
+                fanGroup.setTemperature(mainTemp);
+                fanGroup.setHumidity(mainHumid);
+                fanGroup.setBarometricPressure(mainBarometer);
+
+                mainApp.updateTempList(mainTemp, mainHumid, mainBarometer);
+                f1Temp = 0;
+                f2Temp = 0;
+                f3Temp = 0;
+                FT1 = "";
+                FT2 = "";
+                FT3 = "";
 //                consoleData += someLine;
 
-                 Thread.sleep(10);
+                Thread.sleep(10);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             try {
-//                client.close();
                 fromPrototype.close();
-//                toClient.close();
             } catch (SocketException ex) {
                 System.err.println(ex);
                 System.out.println("Fan Server Error: Finally Block");
@@ -175,32 +191,28 @@ public class TCPClient implements Runnable {
             f2Speed = (double) fanGroup.getFans().get(1).getSpeed();
             f3Speed = (double) fanGroup.getFans().get(2).getSpeed();
 
-            FS1 += round(f1Speed, 0);;
-            FS2 += round(f2Speed, 0);;
-            FS3 += round(f3Speed, 0);;
+            FS1 += round(f1Speed, 0);
+            FS2 += round(f2Speed, 0);
+            FS3 += round(f3Speed, 0);
 
-            System.out.println("FS1: " + FS1);
-            System.out.println("FS2: " + FS2);
-            System.out.println("FS3: " + FS3);
-
+//            System.out.println("FS1: " + FS1);
+//            System.out.println("FS2: " + FS2);
+//            System.out.println("FS3: " + FS3);
             f1Freq = (double) fanGroup.getFans().get(0).getFreq();
             f2Freq = (double) fanGroup.getFans().get(1).getFreq();
             f3Freq = (double) fanGroup.getFans().get(2).getFreq();
 
-            FF1 += round(f1Freq, 0);;
-            FF2 += round(f2Freq, 0);;
-            FF3 += round(f3Freq, 0);;
+            FF1 += round(f1Freq, 0);
+            FF2 += round(f2Freq, 0);
+            FF3 += round(f3Freq, 0);
 
-            System.out.println("FF1: " + FF1);
-            System.out.println("FF2: " + FF2);
-            System.out.println("FF3: " + FF3);
-
+//            System.out.println("FF1: " + FF1);
+//            System.out.println("FF2: " + FF2);
+//            System.out.println("FF3: " + FF3);
 //            System.out.println(fanGroup.getFans().get(0).getSpeed());
             // Write to network
 //            toPrototype.writeUTF("<FS1><" + FS1 + ">,<FS2><" + FS2 + ">,<FS3><" + FS3 + ">,<FF1><" + FF1 + ">,<FF2><" + FF2 + ">,<FF3><" + FF3 + "-------->\n");
             toPrototype.writeBytes("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "F");
-//            System.out.println("data received");
-//            System.out.println(fromPrototype);
             System.out.println("data sent");
             toPrototype.flush();
             f1Speed = 0;
@@ -215,6 +227,7 @@ public class TCPClient implements Runnable {
             FF1 = "";
             FF2 = "";
             FF3 = "";
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

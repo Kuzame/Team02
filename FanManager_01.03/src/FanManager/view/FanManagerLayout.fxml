@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="861.0" prefWidth="1038.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FanManager.view.FanManagerLayoutController">   
+    <children>
+      <ScrollPane fx:id="scrollPane" layoutX="3.0" layoutY="50.0" stylesheets="@DarkTheme.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0">
+               <children>
+                  <TilePane fx:id="fanPane" layoutY="1.0" prefColumns="3" stylesheets="@DarkTheme.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+               </children></AnchorPane>
+        </content>
+      </ScrollPane>
+      <BorderPane layoutX="6.0" layoutY="6.0" prefHeight="44.0" prefWidth="176.0" stylesheets="@DarkTheme.css">
+         <left>
+            <Label text="Temperature:" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="°F" BorderPane.alignment="CENTER" />
+         </right>
+         <center>
+            <TextField fx:id="temperatureLabel" prefHeight="25.0" prefWidth="65.0" text="69.94" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+      <BorderPane layoutX="215.0" layoutY="6.0" prefHeight="44.0" prefWidth="136.0" stylesheets="@DarkTheme.css">
+         <left>
+            <Label text="Humidity:" BorderPane.alignment="CENTER" />
+         </left>
+         <center>
+            <TextField fx:id="humidityLabel" prefHeight="24.0" prefWidth="52.0" text="55.54" BorderPane.alignment="CENTER" />
+         </center>
+         <right>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="\%" wrappingWidth="1.0" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+      <BorderPane layoutX="397.0" layoutY="6.0" prefHeight="44.0" prefWidth="165.0" stylesheets="@DarkTheme.css">
+         <left>
+            <Label text="Barometer:" BorderPane.alignment="CENTER" />
+         </left>
+         <right>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Hg" BorderPane.alignment="CENTER" />
+         </right>
+         <center>
+            <TextField fx:id="barometerLabel" prefHeight="17.0" prefWidth="68.0" text="29.35" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+      <Button layoutX="853.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleSystemOff" prefHeight="33.0" prefWidth="143.0" text="System OFF" />
+   </children>
+</AnchorPane>
