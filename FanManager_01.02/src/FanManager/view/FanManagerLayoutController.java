@@ -31,7 +31,11 @@ import javafx.scene.control.Slider;
  * @author reign
  */
 public class FanManagerLayoutController implements Initializable {
-
+   
+    private String tempString;
+    private String humidString;
+    private String pressureString;
+    
     @FXML
     private TextField temperatureLabel;
     @FXML
@@ -120,6 +124,17 @@ public class FanManagerLayoutController implements Initializable {
             fanPanes[i].getSpeedKnob().adjustValue(0);
         }
     }
-  
-   }
+    
+    public synchronized void updateTempList(double temp, double humidity, double pressure) {
+        tempString = String.valueOf(temp);
+        this.temperatureLabel.setText(tempString);
+        
+        humidString = String.valueOf(humidity);
+        this.humidityLabel.setText(humidString);
+
+        pressureString = String.valueOf(pressure);
+        this.barometerLabel.setText(pressureString);
+    }
+
+}
 
