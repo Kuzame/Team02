@@ -262,7 +262,7 @@ public class GaugeObject extends Region {
                               .effect(textDropShadow)
                               .styleClass("unit")
                               .build();
-        unitText.textProperty().bind(unitString);
+     //   unitText.textProperty().bind(unitString);
 
         valueFont = Font.font("Verdana", FontWeight.NORMAL, DEFAULT_WIDTH * 0.07);
         valueText = TextBuilder.create()

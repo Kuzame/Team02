@@ -50,5 +50,6 @@
             <TextField fx:id="barometerLabel" prefHeight="17.0" prefWidth="68.0" text="29.35" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
+      <Button layoutX="853.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleSystemOff" prefHeight="33.0" prefWidth="143.0" text="System OFF" />
    </children>
 </AnchorPane>

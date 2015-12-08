@@ -8,9 +8,9 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="FanManager_01.02_FXML_.jar" size="106094" download="eager" />
-    <jar href="lib/jfxrt2.jar" size="13517898" download="eager" />
-    <jar href="lib/rxtx-2.1.7.jar" size="59464" download="eager" />
+    <jar href="FanManager_01.02_FXML_.jar" size="107802" download="eager" />
+    <jar href="lib\jfxrt2.jar" size="13517898" download="eager" />
+    <jar href="lib\rxtx-2.1.7.jar" size="59464" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="FanManager_01.02(FXML)" >
     <param name="requiredFXVersion" value="8.0+"/>

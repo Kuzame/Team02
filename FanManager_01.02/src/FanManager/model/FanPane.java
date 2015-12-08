@@ -15,13 +15,17 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -158,20 +162,70 @@ public class FanPane extends FlowPane {
         speedInputLabel.setText(Math.round(gauge.getValue()) + "");
 
         Button powerButton = new Button();
-powerButton.setStyle(
-        "-fx-background-radius: 5em; " +
-        "-fx-min-width: 50px; " +
-        "-fx-min-height: 50px; " +
-        "-fx-max-width: 50px; " +
-        "-fx-max-height: 50px; " +
-        "-fx-background-color: -fx-body-color;" +
-        "-fx-background-insets: 0px; " +
+        powerButton.setStyle(
+         "-fx-background-color: \n" +
+"        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
+"        linear-gradient(#020b02, #3a3a3a),\n" +
+"        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
+"        linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%),\n" +
+"        linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);"+
+        "-fx-background-insets: 2px; " +
+        "-fx-border-width: 1px;"+
+        "-fx-border-color: red;" +
+        //"-fx-border-width: 10px"+
         "-fx-padding: 0px;"
-);//        powerButton.setId("fanButton");
+        
+        );
+        powerButton.setId("fanButton");
+        
+         
+        double r=30;
+        powerButton.setShape(new Circle(r));
+        powerButton.setMinSize(2*r, 2*r);
+        powerButton.setMaxSize(2*r, 2*r);
+        
 //        powerButton.getStyleClass().add("fanPower");
 
-        powerButton.setTranslateX((int) (WIDTH / 24) + 100);
-        powerButton.setTranslateY((int) (HEIGHT / 32) + 200);
+        powerButton.setTranslateX((int) (WIDTH / 2) -41);
+        powerButton.setTranslateY( 143);
+        powerButton.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            @Override public void handle(ActionEvent e) 
+            {
+                Fan fan = getFan();
+                if(fan.isOn())
+                {
+                    powerButton.setStyle(
+                        "-fx-background-color: \n" +
+               "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
+               "        linear-gradient(#020b02, #3a3a3a),\n" +
+               "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
+               "        linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%),\n" +
+               "        linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);"+
+                       "-fx-background-insets: 2px; " +       
+                       "-fx-border-width: 1px;"+
+                       "-fx-border-color: red;" +
+                       "-fx-padding: 0px;"
+                    );
+                    fanOff(fan);
+                    
+                }
+                else
+                {  
+                    powerButton.setStyle(
+                       "-fx-background-color: \n" +
+"                    linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%);" +
+                       "-fx-background-insets: 2px; " +
+                       "-fx-border-width: 1px;" +
+                       "-fx-border-color: limegreen;" +
+                       //"-fx-border-width: 10px"+
+                       "-fx-padding: 0px;");
+                    fan.turnOn(0,40,0);
+                }
+            }
+        });
+
+       
 
         speedKnob.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -240,6 +294,11 @@ powerButton.setStyle(
         });
 
     }
+    
+    public void fanOff(Fan fan){
+           fan.turnOff();
+           speedKnob.adjustValue(0);
+        }
 
     // Fan
     public Fan getFan() {
@@ -320,5 +379,9 @@ powerButton.setStyle(
             ex.printStackTrace();
         }
     }
-
+    public Slider getSpeedKnob()
+    {
+        return speedKnob;
+    }
+ 
 }

@@ -10,6 +10,8 @@ import FanManager.model.FanGroup;
 import FanManager.model.FanPane;
 import FanManager.Networking;
 import FanManager.TCPClient;
+import FanManager.model.FanPane;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -20,6 +22,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.TilePane;
+import FanManager.view.RootLayoutController;
+import javafx.scene.control.Slider;
 
 /**
  * FXML Controller class
@@ -38,6 +42,7 @@ public class FanManagerLayoutController implements Initializable {
     private TilePane fanPane;
     @FXML
     private ScrollPane scrollPane;
+    
 
     private int FANCOUNT = 6;
 
@@ -106,6 +111,15 @@ public class FanManagerLayoutController implements Initializable {
 //        fanList.set(id, new Fan(freq, fanList.get(id)));
         fanPanes[id].setFan(fanList.get(id));
     }
-
+    @FXML
+    private void handleSystemOff() throws IOException {
+        int i = 0;
+        for( i = 0; i < FANCOUNT; i ++)
+        {
+            fanList.get(i).turnOff();
+            fanPanes[i].getSpeedKnob().adjustValue(0);
+        }
+    }
+  
    }
 
