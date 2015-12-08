@@ -25,7 +25,6 @@ import java.net.SocketException;
 import java.util.Date;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import static javax.lang.model.type.TypeKind.BYTE;
 
 public class TCPClient implements Runnable {
 
@@ -54,6 +53,14 @@ public class TCPClient implements Runnable {
     private String FF2 = "";
     private String FF3 = "";
 
+    private double mainTemp = 0;
+    private double mainHumid = 0;
+    private double mainBarometer = 0;
+
+    private String mainTempIn = "";
+    private String mainHumidIn = "";
+    private String mainBarometerIn = "";
+
     private FanManagerLayoutController mainApp;
     private FanGroup fanGroup;
     private ObservableList<Fan> fanList;
@@ -75,15 +82,8 @@ public class TCPClient implements Runnable {
             client = server.accept();
             System.out.println("client = Server accepted");
 
-            // Create an output stream to send data to the server
-//            toClient = new ObjectOutputStream(client.getOutputStream());
-//            System.out.println("toClient: " + toClient + '\n');
-//            toClient.flush();
-//            System.out.println("toClient flush: " + toClient + '\n');
-            // Create an input stream to receive data from the server
             fromPrototype = new DataInputStream(client.getInputStream());
             System.out.println("fromPrototype: " + fromPrototype + '\n');
-//                System.out.println(fromClient.readObject());
 
             toPrototype = new DataOutputStream(client.getOutputStream());
 
@@ -100,21 +100,6 @@ public class TCPClient implements Runnable {
             recieveData.setDaemon(true);
             recieveData.start();
 
-//            String sentence;   String modifiedSentence;   
-//            System.out.println("Inside aThis TCPClient RUN!");
-//
-//            BufferedReader inFromUser = new BufferedReader( new InputStreamReader(System.in));   
-//            Socket clientSocket = new Socket("10.0.1.32", 8000);
-//
-//            ObjectOutputStream outToServer = new ObjectOutputStream(clientSocket.getOutputStream());   
-//            ObjectInputStream inFromServer = new ObjectInputStream(clientSocket.getInputStream());   
-//
-//            outToServer.writeBytes("hi");   
-//
-//            sentence = (String) inFromServer.readObject(); 
-//            System.out.println("FROM SERVER: " + sentence); 
-//
-//            clientSocket.close();  
         } catch (ConnectException ce) {
             System.err.println(ce);
         } catch (Exception ex) {
@@ -127,34 +112,41 @@ public class TCPClient implements Runnable {
     private void recieveData() {
         try {
             while (true) {
-//                System.out.println("Waiting for object");
                 // Read from network
-                char someInt = fromPrototype.readChar();
-                consoleData = fromPrototype.readUTF();
-                consoleData += someInt;
-//                if (someByte == '\n') {
-//                    //data += "\n";
-                    System.out.println(consoleData);
-                    consoleData = "";
-//                }
-//                FanGroup temp = (FanGroup) fromClient.readObject();
-//                System.setErr(new PrintStream(Console.getInstance(theObject)));
+                String someLine = fromPrototype.readLine();
 
-                //System.out.println("Recieved Char");
-                //System.out.println(someInt);
-//                // If new fanGroup sent over, then update each fan
-//                if (!fanGroup.equals(someInt)) {
-//                    fanGroup.update(someInt);
-//                    
-//                    // Update fan animations
-//                    for (int i = 0; i < fanGroup.getFans().size(); i++) {
-//                        if (!fanList.get(i).equals(fanGroup.getFans().get(i))) {
-//                            fanPanes[i].setFan(fanGroup.getFans().get(i));
-//                            fanPanes[i].updateGauge();
-//                        }
-//                    }
-//                }
-                Thread.sleep(10);
+
+                
+                String[] parts = someLine.split(",");
+                
+                mainTempIn = parts[0]; // Temp
+                mainTemp = Double.parseDouble(mainTempIn);
+                System.out.println("Temp: " + mainTemp);
+
+                mainHumidIn = parts[1]; // Humidity
+                mainHumid = Double.parseDouble(mainHumidIn);
+                System.out.println("Humidity: " + mainHumid);
+
+                mainBarometerIn = parts[2]; // Barometer
+                mainBarometer = Double.parseDouble(mainBarometerIn);
+                System.out.println("Barometer: " + mainBarometer);
+                
+            fanGroup = mainApp.getFanGroup();
+
+            fanGroup.setTemperature(mainTemp);
+            fanGroup.setHumidity(mainHumid);
+            fanGroup.setBarometricPressure(mainBarometer);
+            
+//            System.out.println("mainTempIn: " + mainTempIn);
+//            System.out.println("mainHumidIn: " + mainHumidIn);
+//            System.out.println("mainBarometerIn: " + mainBarometerIn);
+               
+//              mainApp.updateTempList(mainTemp, mainHumid, mainBarometer);  
+//              mainApp.(mainTemp, mainHumid, mainBarometer);
+                
+//                consoleData += someLine;
+
+                 Thread.sleep(10);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -186,7 +178,7 @@ public class TCPClient implements Runnable {
             FS1 += round(f1Speed, 0);;
             FS2 += round(f2Speed, 0);;
             FS3 += round(f3Speed, 0);;
-            
+
             System.out.println("FS1: " + FS1);
             System.out.println("FS2: " + FS2);
             System.out.println("FS3: " + FS3);
@@ -198,13 +190,12 @@ public class TCPClient implements Runnable {
             FF1 += round(f1Freq, 0);;
             FF2 += round(f2Freq, 0);;
             FF3 += round(f3Freq, 0);;
-            
+
             System.out.println("FF1: " + FF1);
             System.out.println("FF2: " + FF2);
             System.out.println("FF3: " + FF3);
 
 //            System.out.println(fanGroup.getFans().get(0).getSpeed());
-
             // Write to network
 //            toPrototype.writeUTF("<FS1><" + FS1 + ">,<FS2><" + FS2 + ">,<FS3><" + FS3 + ">,<FF1><" + FF1 + ">,<FF2><" + FF2 + ">,<FF3><" + FF3 + "-------->\n");
             toPrototype.writeBytes("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "F");

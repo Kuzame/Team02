@@ -121,7 +121,7 @@ public class FanPane extends FlowPane {
         speedField.setTranslateX((int) (WIDTH / 16));
         speedField.setTranslateY((int) (HEIGHT / 32) + 370);
         speedKnob.valueProperty().bindBidirectional(gauge.valueProperty());
-//        speedField.valueProperty().bindBidirectional(speedKnob.valueProperty());
+        speedField.valueProperty().bindBidirectional(speedKnob.valueProperty());
         speedField.setPrefWidth(75);
 
         // Speed Input Label

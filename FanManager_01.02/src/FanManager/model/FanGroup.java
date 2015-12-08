@@ -144,4 +144,5 @@ public class FanGroup implements Serializable {
         return result;
     }
 
+    
 }
