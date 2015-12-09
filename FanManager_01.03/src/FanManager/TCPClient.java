@@ -37,17 +37,17 @@ public class TCPClient implements Runnable {
     private Socket client;
     private String consoleData = ""; // logs data from prototype
 
-    private int f1Speed = 0;
-    private int f2Speed = 0;
-    private int f3Speed = 0;
+    private double f1Speed = 0;
+    private double f2Speed = 0;
+    private double f3Speed = 0;
 
     private String FS1 = "";
     private String FS2 = "";
     private String FS3 = "";
 
-    private int f1Freq = 0;
-    private int f2Freq = 0;
-    private int f3Freq = 0;
+    private double f1Freq = 0;
+    private double f2Freq = 0;
+    private double f3Freq = 0;
 
     private String FF1 = "";
     private String FF2 = "";
@@ -183,39 +183,47 @@ public class TCPClient implements Runnable {
     private void sendData() {
         try {
 
-            System.out.println("sending data");
+//            System.out.println("sending data");
             fanGroup = mainApp.getFanGroup();
 
-            f1Speed = (int) fanGroup.getFans().get(0).getSpeed();
-            f2Speed = (int) fanGroup.getFans().get(1).getSpeed();
-            f3Speed = (int) fanGroup.getFans().get(2).getSpeed();
+            f1Speed = (double) fanGroup.getFans().get(0).getSpeed();
+            f2Speed = (double) fanGroup.getFans().get(1).getSpeed();
+            f3Speed = (double) fanGroup.getFans().get(2).getSpeed();
 
-            FS1 += round(f1Speed, 2);
-            FS2 += round(f2Speed, 2);
-            FS3 += round(f3Speed, 2);
+            FS1 += round(f1Speed, 0);
+            FS2 += round(f2Speed, 0);
+            FS3 += round(f3Speed, 0);
 
-//            System.out.println("FS1: " + FS1);
-//            System.out.println("FS2: " + FS2);
-//            System.out.println("FS3: " + FS3);
-            f1Freq = (int) fanGroup.getFans().get(0).getFreq();
-            f2Freq = (int) fanGroup.getFans().get(1).getFreq();
-            f3Freq = (int) fanGroup.getFans().get(2).getFreq();
+            System.out.println("FS1: " + FS1);
+            System.out.println("FS2: " + FS2);
+            System.out.println("FS3: " + FS3);
 
-            FF1 += round(f1Freq, 0);
-            FF2 += round(f2Freq, 0);
-            FF3 += round(f3Freq, 0);
+            f1Freq = (double) fanGroup.getFans().get(0).getFreq();
+            f2Freq = (double) fanGroup.getFans().get(1).getFreq();
+            f3Freq = (double) fanGroup.getFans().get(2).getFreq();
+
+//            FF1 += round(f1Freq, 0); // TODO something wrong here, sending value of 50 ???
+//            FF2 += round(f2Freq, 0);
+//            FF3 += round(f3Freq, 0);
 
 //            FF1 = String.valueOf (f1Freq);
 //            FF2 = String.valueOf (f2Freq);
 //            FF3 = String.valueOf (f3Freq);
-//            System.out.println("FF1: " + FF1);
-//            System.out.println("FF2: " + FF2);
-//            System.out.println("FF3: " + FF3);
+            
+            FF1 = "0";
+            FF2 = "0";
+            FF3 = "0";
+
+            System.out.println("FF1: " + FF1);
+            System.out.println("FF2: " + FF2);
+            System.out.println("FF3: " + FF3);
+            
+            
 //            System.out.println(fanGroup.getFans().get(0).getSpeed());
             // Write to network
-            toPrototype.writeUTF("\n" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3);
-//            toPrototype.writeBytes("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "F");
-            System.out.println("data sent");
+//            toPrototype.writeUTF("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "\n");
+            toPrototype.writeBytes("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "\n");
+//            System.out.println("data sent");
             toPrototype.flush();
             f1Speed = 0;
             f2Speed = 0;
@@ -229,6 +237,9 @@ public class TCPClient implements Runnable {
             FF1 = "";
             FF2 = "";
             FF3 = "";
+//            System.out.println("OUT FS1: " + FS1);
+//            System.out.println("OUT FS2: " + FS2);
+//            System.out.println("OUT FS3: " + FS3);
 
         } catch (Exception ex) {
             ex.printStackTrace();
