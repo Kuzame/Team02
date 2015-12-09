@@ -56,6 +56,9 @@ public class FanPane extends FlowPane {
     // Knobs
     private Slider speedKnob;
     private Slider freqKnob;
+    
+    //Button
+    Button powerButton = new Button();
 
     // Label
     final private Label tempLabel = new Label();
@@ -162,7 +165,6 @@ public class FanPane extends FlowPane {
         speedField.setText(Math.round(speedKnob.getValue()) + "");
         speedField.setText(Math.round(gauge.getValue()) + "");
 
-        Button powerButton = new Button();
         powerButton.setStyle(
          "-fx-background-color: \n" +
 "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
@@ -196,35 +198,20 @@ public class FanPane extends FlowPane {
                 Fan fan = getFan();
                 if(fan.isOn())
                 {
-                    powerButton.setStyle(
-                        "-fx-background-color: \n" +
-               "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
-               "        linear-gradient(#020b02, #3a3a3a),\n" +
-               "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
-               "        linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%),\n" +
-               "        linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);"+
-                       "-fx-background-insets: 2px; " +       
-                       "-fx-border-width: 1px;"+
-                       "-fx-border-color: red;" +
-                       "-fx-padding: 0px;"
-                    );
+                    turnOffButton();
                     fanOff(fan);
+                    System.out.println("Turning off the power");
                     
                 }
                 else
                 {  
-                    powerButton.setStyle(
-                       "-fx-background-color: \n" +
-"                    linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%);" +
-                       "-fx-background-insets: 2px; " +
-                       "-fx-border-width: 1px;" +
-                       "-fx-border-color: limegreen;" +
-                       //"-fx-border-width: 10px"+
-                       "-fx-padding: 0px;");
+                    turnOnButton();
                     fan.turnOn(0,40,0);
+                    System.out.println("Turning on the power");
                 }
             }
         });
+        
 
        
         speedKnob.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
@@ -308,6 +295,32 @@ public class FanPane extends FlowPane {
 
     }
     
+    //simply call these functions if want to turn off/on button (image only, not turning it off functionally)
+    public void turnOnButton() {
+        powerButton.setStyle(
+                       "-fx-background-color: \n" +
+"                    linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%);" +
+                       "-fx-background-insets: 2px; " +
+                       "-fx-border-width: 1px;" +
+                       "-fx-border-color: limegreen;" +
+                       //"-fx-border-width: 10px"+
+                       "-fx-padding: 0px;");
+    }
+    
+    public void turnOffButton() {
+        powerButton.setStyle(
+                        "-fx-background-color: \n" +
+               "        linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),\n" +
+               "        linear-gradient(#020b02, #3a3a3a),\n" +
+               "        linear-gradient(#9d9e9d 0%, #6b6a6b 20%, #343534 80%, #242424 100%),\n" +
+               "        linear-gradient(#8a8a8a 0%, #6b6a6b 20%, #343534 80%, #262626 100%),\n" +
+               "        linear-gradient(#777777 0%, #606060 50%, #505250 51%, #2a2b2a 100%);"+
+                       "-fx-background-insets: 2px; " +       
+                       "-fx-border-width: 1px;"+
+                       "-fx-border-color: red;" +
+                       "-fx-padding: 0px;"
+                    );
+    }
     public void fanOff(Fan fan){
            fan.turnOff();
            speedKnob.adjustValue(0);
