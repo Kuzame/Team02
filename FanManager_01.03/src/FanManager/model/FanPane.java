@@ -161,7 +161,7 @@ public class FanPane extends FlowPane {
         freqField.setPrefWidth(75);
         freqField.setTranslateX((int) (WIDTH / 16));
         freqField.setTranslateY((int) (HEIGHT / 32) + 560);
-        freqField.valueProperty().bindBidirectional(freqKnob.valueProperty());
+//        freqField.valueProperty().bindBidirectional(freqKnob.valueProperty());
 
 //        // Get values from speedKnob and the gauge to display in the input label
         speedField.setText(Math.round(speedKnob.getValue()) + "");
@@ -334,7 +334,6 @@ public class FanPane extends FlowPane {
     }
     
     public void fanOff(Fan fan){
-            fanOff(fan);
             fan.setPower(false);
             fan.turnOff();
             turnOffButton();
