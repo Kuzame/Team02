@@ -110,8 +110,9 @@ public class FanManagerLayoutController implements Initializable {
     }
 
     public synchronized void updateFanList(double speed, double freq, boolean power, int id) {
-        fanList.set(id, new Fan(speed, freq, power, fanList.get(id)));
+        fanList.set(id, new Fan(speed, freq, true, fanList.get(id))); //should send "true" because when we move the gauge, we want it to be alive
         fanPanes[id].setFan(fanList.get(id));
+        if (power==false) fanPanes[id].turnOnButton(); //need to call this to change design to on if it's currently off
     }
     @FXML
     private void handleSystemOff() throws IOException {
