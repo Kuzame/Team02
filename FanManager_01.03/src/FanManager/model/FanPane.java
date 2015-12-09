@@ -161,7 +161,7 @@ public class FanPane extends FlowPane {
         freqField.setPrefWidth(75);
         freqField.setTranslateX((int) (WIDTH / 16));
         freqField.setTranslateY((int) (HEIGHT / 32) + 560);
-//        freqField.valueProperty().bindBidirectional(freqKnob.valueProperty());
+        freqField.valueProperty().bindBidirectional(freqKnob.valueProperty());
 
 //        // Get values from speedKnob and the gauge to display in the input label
         speedField.setText(Math.round(speedKnob.getValue()) + "");
@@ -200,6 +200,7 @@ public class FanPane extends FlowPane {
                 if(fan.isOn())
                 {
 //                    turnOffButton();//PS: We have to decide where to call this function only once, not multiple times since we also called it in fanOff(below)
+                    System.out.println("Turning off the power");
                     fanOff(fan);
                     
                 }
@@ -328,17 +329,14 @@ public class FanPane extends FlowPane {
         
         power = false; //Same reason as in turnOnButton
         fan.setPower(false);
-        System.out.println("Turning off the power");
     }
     
     public void fanOff(Fan fan){
-            fan.setPower(false);
             fan.turnOff();
-            turnOffButton(); 
-            power = false;
+            turnOffButton();
             speedKnob.adjustValue(0);
             freqKnob.adjustValue(0);
-//            System.out.println("Turning off the All Fans"); //Even turning off 1 button will need to call the function, so this shouldn't be here
+            System.out.println("Turning off all Fans");
 
         }
 

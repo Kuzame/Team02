@@ -74,13 +74,13 @@ public class FreqInputField extends Label {
             if (newValue.intValue() == 0 && (textProperty().get() == null || "".equals(textProperty().get()))) {
               // no action required, text property is already blank, we don't need to set it to 0.
             } else {
-                Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
+//                Platform.runLater(new Runnable() { //!!!THIS is what's causing the throttling issues in knob!!!
+//                @Override
+//                public void run() {
 
                    inputField.setText(newValue.toString());
-                }
-            });
+//                }
+//            });
               
             }
           }
