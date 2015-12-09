@@ -158,7 +158,6 @@ public class FanPane extends FlowPane {
         freqField.setPrefWidth(75);
         freqField.setTranslateX((int) (WIDTH / 16));
         freqField.setTranslateY((int) (HEIGHT / 32) + 560);
-        freqField.setText(Math.round(freqKnob.getValue()) + "");
         freqField.valueProperty().bindBidirectional(freqKnob.valueProperty());
 
 //        // Get values from speedKnob and the gauge to display in the input label
@@ -223,10 +222,14 @@ public class FanPane extends FlowPane {
                     public void run() {
                         if (!speedKnob.isValueChanging()) {
                             if (newValue == null) {
-                                speedField.setText("");
+                                double roundOff = (double) Math.round(speedKnob.getValue() * 100) / 100;
+                                String total2 = String.valueOf(roundOff);
+                                speedField.setText(total2);
                                 return;
                             }
-                            speedField.setText((speedKnob.getValue()) + "");
+                                double roundOff = (double) Math.round(speedKnob.getValue() * 100) / 100;
+                                String total2 = String.valueOf(roundOff);
+                                speedField.setText(total2);
 
                             //fan.setSpeed(speedKnob.getValue());
                             mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), id);
@@ -246,11 +249,15 @@ public class FanPane extends FlowPane {
                     public void run() {
                         if (!freqKnob.isValueChanging()) {
                             if (newValue == null) {
-                                freqField.setText("");
+                                double roundOff = (double) Math.round(freqKnob.getValue() * 100) / 100;
+                                String total2 = String.valueOf(roundOff);
+                            freqField.setText(total2);
                                 return;
                             }
-                            freqField.setText((freqKnob.getValue()) + "");
-
+//                            freqField.setText((freqKnob.getValue()) + "");
+                                double roundOff = (double) Math.round(freqKnob.getValue() * 100) / 100;
+                                String total2 = String.valueOf(roundOff);
+                            freqField.setText(total2);
                             //fan.setSpeed(speedKnob.getValue());
                             mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), id);
                             System.out.println("Freq updated");
