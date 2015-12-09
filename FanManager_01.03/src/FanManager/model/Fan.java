@@ -35,7 +35,7 @@ public class Fan implements Serializable {
     }
     
     public Fan(double speed, double freq,boolean power, Fan f){
-        this.power = f.power;
+        this.isOn = power; //here is also issue with the confusion of "power" and "isOn". Also we want the power passed through boolean power, not Fan f's (f.power).
         this.freq = f.freq;
         this.minStartingTemp = f.minStartingTemp;
         this.minRunningTemp = f.minRunningTemp;
@@ -66,9 +66,8 @@ public class Fan implements Serializable {
     //
     public void turnOff() {
         isOn = false;
-        
-        this.power = false;
-        this.freq = 40;
+        power = false;
+        freq = 40;
         setSpeed(0);
     }
 
