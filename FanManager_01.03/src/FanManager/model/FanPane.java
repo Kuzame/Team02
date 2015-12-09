@@ -249,10 +249,10 @@ public class FanPane extends FlowPane {
                             freqField.setText("");
                                 return;
                             }
-                            freqField.setText((freqKnob.getValue()) + "");
-//                                double roundOff2 = (double) Math.round(freqKnob.getValue() * 100) / 100;
-//                                String total3 = String.valueOf(roundOff2);
-//                            freqField.setText(total3);
+//                            freqField.setText((freqKnob.getValue()) + "");
+                                double roundOff2 = (double) Math.round(freqKnob.getValue() * 100) / 100;
+                                String total3 = String.valueOf(roundOff2);
+                                freqField.setText(total3);
                             //fan.setSpeed(speedKnob.getValue());
                             mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), power, id);
                             System.out.println("Freq updated");
