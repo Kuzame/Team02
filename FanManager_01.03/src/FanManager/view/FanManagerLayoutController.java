@@ -109,8 +109,8 @@ public class FanManagerLayoutController implements Initializable {
         return fanPanes;
     }
 
-    public synchronized void updateFanList(double speed, double freq, int id) {
-        fanList.set(id, new Fan(speed, freq, fanList.get(id)));
+    public synchronized void updateFanList(double speed, double freq, boolean power, int id) {
+        fanList.set(id, new Fan(speed, freq, power, fanList.get(id)));
         fanPanes[id].setFan(fanList.get(id));
     }
     @FXML
@@ -121,7 +121,7 @@ public class FanManagerLayoutController implements Initializable {
             fanList.get(i).turnOff();
             fanPanes[i].getSpeedKnob().adjustValue(0);
             fanPanes[i].getFreqKnob().adjustValue(0);
-
+            fanPanes[i].turnOffButton(); //was not merging from github ????
         }
     }
     

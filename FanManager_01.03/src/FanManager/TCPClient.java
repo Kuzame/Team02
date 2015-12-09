@@ -122,7 +122,6 @@ public class TCPClient implements Runnable {
             while (true) {
                 // Read from network
                 String someLine = fromPrototype.readLine();
-
                 String[] parts = someLine.split(",");
 
                 mainTempIn = parts[0]; // Temp

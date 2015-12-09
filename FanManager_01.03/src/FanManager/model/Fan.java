@@ -15,7 +15,7 @@ public class Fan implements Serializable {
     private static final long serialVersionUID = -7621164129293024859L;
 
     private boolean isOn;
-    private double power;
+    private boolean power;
 
     private double freq;
     private double speed;
@@ -31,10 +31,10 @@ public class Fan implements Serializable {
     // Constructor
     //
     public Fan() {
-        this(0.0, 0.0, 0.0, 70, 60, 0.0, 100.0, 70.0);
+        this(false, 0.0, 0.0, 70, 60, 0.0, 100.0, 70.0);
     }
     
-    public Fan(double speed, double freq, Fan f){
+    public Fan(double speed, double freq,boolean power, Fan f){
         this.power = f.power;
         this.freq = f.freq;
         this.minStartingTemp = f.minStartingTemp;
@@ -46,12 +46,12 @@ public class Fan implements Serializable {
         setSpeed(speed);        
     }
 
-    public Fan(double power, double freq, double speed,
+    public Fan(boolean power, double freq, double speed,
             double minStartingTemp, double minRunningTemp,
             double minSpeed, double maxSpeed, double temperature) {
         super();
 
-        this.power = power;
+        this.power = false;
         this.freq = freq;
         this.minStartingTemp = minStartingTemp;
         this.minRunningTemp = minRunningTemp;
@@ -66,26 +66,26 @@ public class Fan implements Serializable {
     //
     public void turnOff() {
         isOn = false;
-
-        this.power = 0;
+        
+        this.power = false;
         this.freq = 40;
         setSpeed(0);
     }
 
     // Turn On
     //
-    public void turnOn(double power, double freq, double speed) {
+    public void turnOn(boolean power, double freq, double speed) {
         isOn = true;
 
-        this.power = power;
+        this.power = true;
         this.freq = freq;
         setSpeed(speed);
     }
 
-    public void turnOn(double power, double freq) {
+    public void turnOn(boolean power, double freq) {
         isOn = true;
 
-        this.power = power;
+        this.power = true;
         this.freq = freq;
         setSpeed(minSpeed);
     }
@@ -98,12 +98,12 @@ public class Fan implements Serializable {
     }
 
     // Power
-    public double getPower() {
+    public boolean getPower() {
         return power;
     }
 
-    public void setPower(double power) {
-        this.power = power;
+    public void setPower(boolean power) {
+        this.power = false;
     }
 
     // Freq

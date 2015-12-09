@@ -45,6 +45,9 @@ public class FanPane extends FlowPane {
     private AnimationTimer timer;
     private GaugeObject gauge;
 
+    // power
+    private boolean power;
+    
     //values to hold for Input Text Fields
     private double freqValue;
     private double speedValue;
@@ -174,7 +177,6 @@ public class FanPane extends FlowPane {
         "-fx-background-insets: 2px; " +
         "-fx-border-width: 1px;"+
         "-fx-border-color: red;" +
-        //"-fx-border-width: 10px"+
         "-fx-padding: 0px;"
         
         );
@@ -199,13 +201,16 @@ public class FanPane extends FlowPane {
                 {
                     turnOffButton();
                     fanOff(fan);
+                    power = false;
+                    fan.setPower(false);
                     System.out.println("Turning off the power");
                     
                 }
                 else
                 {  
                     turnOnButton();
-                    fan.turnOn(0,40,0);
+                    power = true;
+                    fan.turnOn(true,50,40);
                     System.out.println("Turning on the power");
                 }
             }
@@ -232,7 +237,7 @@ public class FanPane extends FlowPane {
                                 speedField.setText(total2);
 
                             //fan.setSpeed(speedKnob.getValue());
-                            mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), id);
+                            mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), power, id);
                             System.out.println("Speed updated");
                         }
                     }
@@ -249,24 +254,23 @@ public class FanPane extends FlowPane {
                     public void run() {
                         if (!freqKnob.isValueChanging()) {
                             if (newValue == null) {
-                                double roundOff = (double) Math.round(freqKnob.getValue() * 100) / 100;
-                                String total2 = String.valueOf(roundOff);
-                            freqField.setText(total2);
+                                double roundOff2 = (double) Math.round(freqKnob.getValue() * 100) / 100;
+                                String total3 = String.valueOf(roundOff2);
+                            freqField.setText(total3);
                                 return;
                             }
 //                            freqField.setText((freqKnob.getValue()) + "");
-                                double roundOff = (double) Math.round(freqKnob.getValue() * 100) / 100;
-                                String total2 = String.valueOf(roundOff);
-                            freqField.setText(total2);
+                                double roundOff2 = (double) Math.round(freqKnob.getValue() * 100) / 100;
+                                String total3 = String.valueOf(roundOff2);
+                            freqField.setText(total3);
                             //fan.setSpeed(speedKnob.getValue());
-                            mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), id);
+                            mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), power, id);
                             System.out.println("Freq updated");
                         }
                     }
                 });
             }
         });
-        
         
         // Create background fill
         Rectangle background = new Rectangle(WIDTH, HEIGHT, Color.BLACK);
@@ -328,9 +332,17 @@ public class FanPane extends FlowPane {
                        "-fx-padding: 0px;"
                     );
     }
+    
     public void fanOff(Fan fan){
-           fan.turnOff();
-           speedKnob.adjustValue(0);
+            fanOff(fan);
+            fan.setPower(false);
+            fan.turnOff();
+            turnOffButton();
+            power = false;
+            speedKnob.adjustValue(0);
+            freqKnob.adjustValue(0);
+            System.out.println("Turning off the All Fans");
+
         }
 
     // Fan
