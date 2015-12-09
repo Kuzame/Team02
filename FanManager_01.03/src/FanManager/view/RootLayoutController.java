@@ -117,7 +117,7 @@ public class RootLayoutController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Console.fxml"));
         Parent root = (Parent) loader.load();
         Stage stage = new Stage();
-        stage.setScene(new Scene(root, 320, 200));
+        stage.setScene(new Scene(root, 600, 400));
         stage.show();
         
     }

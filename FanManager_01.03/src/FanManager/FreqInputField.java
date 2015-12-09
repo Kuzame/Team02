@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
@@ -18,7 +19,7 @@ import javafx.scene.input.KeyEvent;
  *
  * @author Reign
  */
-public class FreqInputField extends TextField {
+public class FreqInputField extends Label {
    // helper text field subclass which restricts text input to a given range of natural int numbers
   // and exposes the current numeric int value of the edit box as a value property.
     private DoubleProperty value;

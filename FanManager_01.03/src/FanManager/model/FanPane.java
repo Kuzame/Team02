@@ -141,7 +141,7 @@ public class FanPane extends FlowPane {
         freqLabel.setStyle("-fx-text-fill: white;");
 
         // Create frequency Knob
-        freqKnob = new Slider(0, 40000, 40);
+        freqKnob = new Slider(0, 100, 0);
         freqKnob.setBlockIncrement(1);
         freqKnob.setId("knob");
         freqKnob.getStyleClass().add("knobStyle");
@@ -155,6 +155,7 @@ public class FanPane extends FlowPane {
         freqField.setPrefWidth(75);
         freqField.setTranslateX((int) (WIDTH / 16));
         freqField.setTranslateY((int) (HEIGHT / 32) + 560);
+        freqField.setText(Math.round(freqKnob.getValue()) + "");
         freqField.valueProperty().bindBidirectional(freqKnob.valueProperty());
 
 //        // Get values from speedKnob and the gauge to display in the input label
@@ -329,7 +330,7 @@ public class FanPane extends FlowPane {
     }
 
     private FreqInputField FreqInputField() {
-        freqField = new FreqInputField(40, 40000, 40);
+        freqField = new FreqInputField(0, 100, 0);
         return freqField;
     }
 

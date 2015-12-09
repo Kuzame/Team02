@@ -211,7 +211,7 @@ public class TCPClient implements Runnable {
 //            System.out.println("FF3: " + FF3);
 //            System.out.println(fanGroup.getFans().get(0).getSpeed());
             // Write to network
-            toPrototype.writeUTF(FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "\n");
+            toPrototype.writeUTF("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "F" + "\n");
 //            toPrototype.writeBytes("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "F");
             System.out.println("data sent");
             toPrototype.flush();

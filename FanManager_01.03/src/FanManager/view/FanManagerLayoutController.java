@@ -120,7 +120,7 @@ public class FanManagerLayoutController implements Initializable {
         {
             fanList.get(i).turnOff();
             fanPanes[i].getSpeedKnob().adjustValue(0);
-            fanPanes[i].getFreqKnob().adjustValue(40);
+            fanPanes[i].getFreqKnob().adjustValue(0);
 
         }
     }
