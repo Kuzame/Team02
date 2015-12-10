@@ -37,9 +37,9 @@ public class TCPClient implements Runnable {
     private Socket client;
     private String consoleData = ""; // logs data from prototype
 
-    private double f1Speed = 0;
-    private double f2Speed = 0;
-    private double f3Speed = 0;
+    private int f1Speed = 0;
+    private int f2Speed = 0;
+    private int f3Speed = 0;
 
     private String FS1 = "";
     private String FS2 = "";
@@ -56,6 +56,14 @@ public class TCPClient implements Runnable {
     private double f1Temp = 0;
     private double f2Temp = 0;
     private double f3Temp = 0;
+
+    private String FP1 = "";
+    private String FP2 = "";
+    private String FP3 = "";
+
+    private boolean f1Power = false;
+    private boolean f2Power = false;
+    private boolean f3Power = false;
 
     private String FT1 = "";
     private String FT2 = "";
@@ -186,13 +194,16 @@ public class TCPClient implements Runnable {
 //            System.out.println("sending data");
             fanGroup = mainApp.getFanGroup();
 
-            f1Speed = (double) fanGroup.getFans().get(0).getSpeed();
-            f2Speed = (double) fanGroup.getFans().get(1).getSpeed();
-            f3Speed = (double) fanGroup.getFans().get(2).getSpeed();
+            f1Speed = (int) fanGroup.getFans().get(0).getSpeed();
+            f2Speed = (int) fanGroup.getFans().get(1).getSpeed();
+            f3Speed = (int) fanGroup.getFans().get(2).getSpeed();
 
-            FS1 += round(f1Speed, 0);
-            FS2 += round(f2Speed, 0);
-            FS3 += round(f3Speed, 0);
+//            FS1 += round(f1Speed, 0);
+//            FS2 += round(f2Speed, 0);
+//            FS3 += round(f3Speed, 0);
+            FS1 = String.valueOf(f1Speed);
+            FS2 = String.valueOf(f2Speed);
+            FS3 = String.valueOf(f3Speed);
 
             System.out.println("FS1: " + FS1);
             System.out.println("FS2: " + FS2);
@@ -210,9 +221,13 @@ public class TCPClient implements Runnable {
 //            FF2 = String.valueOf (f2Freq);
 //            FF3 = String.valueOf (f3Freq);
             
-            FF1 = "0";
-            FF2 = "0";
-            FF3 = "0";
+            FF1 = "60";
+            FF2 = "60";
+            FF3 = "60";
+
+            FP1 = "0";
+            FP2 = "0";
+            FP3 = "1";
 
             System.out.println("FF1: " + FF1);
             System.out.println("FF2: " + FF2);
@@ -222,7 +237,7 @@ public class TCPClient implements Runnable {
 //            System.out.println(fanGroup.getFans().get(0).getSpeed());
             // Write to network
 //            toPrototype.writeUTF("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "\n");
-            toPrototype.writeBytes("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "\n");
+            toPrototype.writeBytes("H" + FS1 + "," + FS2 + "," + FS3 + "," + FF1 + "," + FF2 + "," + FF3 + "," + FP1 + "," + FP2 + "," + FP3 + "\n");
 //            System.out.println("data sent");
             toPrototype.flush();
             f1Speed = 0;
