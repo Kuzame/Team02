@@ -45,9 +45,9 @@ public class TCPClient implements Runnable {
     private String FS2 = "";
     private String FS3 = "";
 
-    private double f1Freq = 0;
-    private double f2Freq = 0;
-    private double f3Freq = 0;
+    private int f1Freq = 0;
+    private int f2Freq = 0;
+    private int f3Freq = 0;
 
     private String FF1 = "";
     private String FF2 = "";
@@ -64,6 +64,10 @@ public class TCPClient implements Runnable {
     private boolean f1Power = false;
     private boolean f2Power = false;
     private boolean f3Power = false;
+
+    private int f1PowerToInt = 0;
+    private int f2PowerToInt = 0;
+    private int f3PowerToInt = 0;
 
     private String FT1 = "";
     private String FT2 = "";
@@ -198,6 +202,14 @@ public class TCPClient implements Runnable {
             f2Speed = (int) fanGroup.getFans().get(1).getSpeed();
             f3Speed = (int) fanGroup.getFans().get(2).getSpeed();
 
+            f1Freq = (int) fanGroup.getFans().get(0).getFreq();
+            f2Freq = (int) fanGroup.getFans().get(1).getFreq();
+            f3Freq = (int) fanGroup.getFans().get(2).getFreq();
+
+            f1Power = (boolean) fanGroup.getFans().get(0).getPower();
+            f2Power = (boolean) fanGroup.getFans().get(1).getPower();
+            f3Power = (boolean) fanGroup.getFans().get(2).getPower();
+
 //            FS1 += round(f1Speed, 0);
 //            FS2 += round(f2Speed, 0);
 //            FS3 += round(f3Speed, 0);
@@ -209,29 +221,40 @@ public class TCPClient implements Runnable {
             System.out.println("FS2: " + FS2);
             System.out.println("FS3: " + FS3);
 
-            f1Freq = (double) fanGroup.getFans().get(0).getFreq();
-            f2Freq = (double) fanGroup.getFans().get(1).getFreq();
-            f3Freq = (double) fanGroup.getFans().get(2).getFreq();
 
 //            FF1 += round(f1Freq, 0); // TODO something wrong here, sending value of 50 ???
 //            FF2 += round(f2Freq, 0);
 //            FF3 += round(f3Freq, 0);
 
-//            FF1 = String.valueOf (f1Freq);
-//            FF2 = String.valueOf (f2Freq);
-//            FF3 = String.valueOf (f3Freq);
+            FF1 = String.valueOf (f1Freq);
+            FF2 = String.valueOf (f2Freq);
+            FF3 = String.valueOf (f3Freq);
             
-            FF1 = "60";
-            FF2 = "60";
-            FF3 = "60";
+//            FF1 = "60";
+//            FF2 = "60";
+//            FF3 = "60";
 
             System.out.println("FF1: " + FF1);
             System.out.println("FF2: " + FF2);
             System.out.println("FF3: " + FF3);
 
-            FP1 = "0";
-            FP2 = "0";
-            FP3 = "1";
+            if (f1Power == false)
+                f1PowerToInt = 0;
+            if (f1Power == true)
+                f1PowerToInt = 1;
+            if (f2Power == false)
+                f2PowerToInt = 0;
+            if (f2Power == true)
+                f2PowerToInt = 1;
+            if (f3Power == false)
+                f3PowerToInt = 0;
+            if (f3Power == true)
+                f3PowerToInt = 1;
+            
+            
+            FP1 = String.valueOf (f1PowerToInt);
+            FP2 = String.valueOf (f2PowerToInt);
+            FP3 = String.valueOf (f3PowerToInt);
 
             System.out.println("FP1: " + FP1);
             System.out.println("FP2: " + FP2);
