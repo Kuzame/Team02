@@ -35,7 +35,7 @@ public class TCPClient implements Runnable {
 
     private ServerSocket server;
     private Socket client;
-    private String consoleData = ""; // logs data from prototype
+    private final String consoleData = ""; // logs data from prototype
 
     private int f1Speed = 0;
     private int f2Speed = 0;
@@ -81,10 +81,10 @@ public class TCPClient implements Runnable {
     private String mainHumidIn = "";
     private String mainBarometerIn = "";
 
-    private FanManagerLayoutController mainApp;
+    private final FanManagerLayoutController mainApp;
     private FanGroup fanGroup;
-    private ObservableList<Fan> fanList;
-    private FanPane[] fanPanes;
+    private final ObservableList<Fan> fanList;
+    private final FanPane[] fanPanes;
 
     public TCPClient(FanManagerLayoutController mainApp) {
         this.mainApp = mainApp;
@@ -119,6 +119,11 @@ public class TCPClient implements Runnable {
             Thread recieveData = new Thread(() -> recieveData());
             recieveData.setDaemon(true);
             recieveData.start();
+
+            // Send client data
+            Thread sendData = new Thread(() -> sendData());
+            sendData.setDaemon(true);
+            sendData.start();
 
         } catch (ConnectException ce) {
             System.err.println(ce);
@@ -177,8 +182,7 @@ public class TCPClient implements Runnable {
 
                 Thread.sleep(10);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException | NumberFormatException | InterruptedException ex) {
         } finally {
             try {
                 fromPrototype.close();
@@ -202,25 +206,25 @@ public class TCPClient implements Runnable {
             f2Speed = (int) (double) fanGroup.getFans().get(1).getSpeed();
             f3Speed = (int) (double) fanGroup.getFans().get(2).getSpeed();
 
-            System.out.println("f1Speed: " + f1Speed);
-            System.out.println("f2Speed: " + f2Speed);
-            System.out.println("f3Speed: " + f3Speed);
+//            System.out.println("f1Speed: " + f1Speed);
+//            System.out.println("f2Speed: " + f2Speed);
+//            System.out.println("f3Speed: " + f3Speed);
 
             f1Freq = (int) (double) fanGroup.getFans().get(0).getFreq();
             f2Freq = (int) (double) fanGroup.getFans().get(1).getFreq();
             f3Freq = (int) (double) fanGroup.getFans().get(2).getFreq();
 
-            System.out.println("f1Freq: " + f1Freq);
-            System.out.println("f2Freq: " + f2Freq);
-            System.out.println("f3Freq: " + f3Freq);
+//            System.out.println("f1Freq: " + f1Freq);
+//            System.out.println("f2Freq: " + f2Freq);
+//            System.out.println("f3Freq: " + f3Freq);
 
             f1Power = (boolean) fanGroup.getFans().get(0).getPower();
             f2Power = (boolean) fanGroup.getFans().get(1).getPower();
             f3Power = (boolean) fanGroup.getFans().get(2).getPower();
  
-            System.out.println("f1Power: " + f1Power);
-            System.out.println("f2Power: " + f2Power);
-            System.out.println("f3Power: " + f3Power);
+//            System.out.println("f1Power: " + f1Power);
+//            System.out.println("f2Power: " + f2Power);
+//            System.out.println("f3Power: " + f3Power);
 
 
 //            FS1 += round(f1Speed, 0);
@@ -253,17 +257,17 @@ public class TCPClient implements Runnable {
             
             
             if (f1Power == false)
-                f1PowerToInt = 0;
-            if (f1Power == true)
                 f1PowerToInt = 1;
+            if (f1Power == true)
+                f1PowerToInt = 0;
             if (f2Power == false)
-                f2PowerToInt = 0;
-            if (f2Power == true)
                 f2PowerToInt = 1;
+            if (f2Power == true)
+                f2PowerToInt = 0;
             if (f3Power == false)
-                f3PowerToInt = 0;
-            if (f3Power == true)
                 f3PowerToInt = 1;
+            if (f3Power == true)
+                f3PowerToInt = 0;
             
             
             FP1 = String.valueOf (f1PowerToInt);
@@ -298,7 +302,7 @@ public class TCPClient implements Runnable {
 //            System.out.println("OUT FS3: " + FS3);
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+
         }
 
     }

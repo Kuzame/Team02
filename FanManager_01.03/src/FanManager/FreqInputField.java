@@ -5,14 +5,10 @@
  */
 package FanManager;
 
-import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -56,62 +52,56 @@ public class FreqInputField extends Label {
  
       // make sure the value property is clamped to the required range
       // and update the field's text to be in sync with the value.
-      value.addListener(new ChangeListener<Number>() {
-        @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+      value.addListener((ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) -> {
           if (newValue == null) {
-            inputField.setText("");
+              inputField.setText("");
           } else {
-            if (newValue.intValue() < inputField.minValue) {
-              value.setValue(inputField.minValue);
-              return;
-            }
- 
-            if (newValue.intValue() > inputField.maxValue) {
-              value.setValue(inputField.maxValue);
-              return;
-            }
- 
-            if (newValue.intValue() == 0 && (textProperty().get() == null || "".equals(textProperty().get()))) {
-              // no action required, text property is already blank, we don't need to set it to 0.
-            } else {
+              if (newValue.intValue() < inputField.minValue) {
+                  value.setValue(inputField.minValue);
+                  return;
+              }
+              
+              if (newValue.intValue() > inputField.maxValue) {
+                  value.setValue(inputField.maxValue);
+                  return;
+              }
+              
+              if (newValue.intValue() == 0 && (textProperty().get() == null || "".equals(textProperty().get()))) {
+                  // no action required, text property is already blank, we don't need to set it to 0.
+              } else {
 //                Platform.runLater(new Runnable() { //!!!THIS is what's causing the throttling issues in knob!!!
 //                @Override
 //                public void run() {
-
-                   inputField.setText(newValue.toString());
+                  
+                  inputField.setText(newValue.toString());
 //                }
 //            });
-              
-            }
+                  
+              }
           }
-        }
       });
  
       // restrict key input to numerals.
-      this.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-        @Override public void handle(KeyEvent keyEvent) {
+      this.addEventFilter(KeyEvent.KEY_TYPED, (KeyEvent keyEvent) -> {
           if (!"0123456789".contains(keyEvent.getCharacter())) {
-            keyEvent.consume();
+              keyEvent.consume();
           }
-        }
       });
       
       // ensure any entered values lie inside the required range.
-      this.textProperty().addListener(new ChangeListener<String>() {
-        @Override public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+      this.textProperty().addListener((ObservableValue<? extends String> observableValue, String oldValue, String newValue) -> {
           if (newValue == null || "".equals(newValue)) {
-            value.setValue(0);
-            return;
+//              value.setValue(0);
+              return;
           }
- 
+          
           final double intValue = Double.parseDouble(newValue);
- 
+          
           if (inputField.minValue > intValue || intValue > inputField.maxValue) {
-            textProperty().setValue(oldValue);
+              textProperty().setValue(oldValue);
           }
           
           value.set(Double.parseDouble(textProperty().get()));
-        }
       });
     }
 }   

@@ -119,8 +119,7 @@ public class FanManagerLayoutController implements Initializable {
     }
     @FXML
     private void handleSystemOff() throws IOException {
-        int i = 0;
-        for( i = 0; i < FANCOUNT; i ++)
+        for( int i = 0; i < FANCOUNT; i ++)
         {
             fanList.get(i).turnOff();
             fanPanes[i].getSpeedKnob().adjustValue(0);

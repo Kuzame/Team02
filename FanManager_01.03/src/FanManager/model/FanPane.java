@@ -12,17 +12,13 @@ import FanManager.view.FanManagerLayoutController;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -32,7 +28,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Reign & Felix
  */
-public class FanPane extends FlowPane {
+public final class FanPane extends FlowPane {
 
     private static final double WIDTH = 350, HEIGHT = 768;
     private static int nextId = 0;
@@ -191,69 +187,51 @@ public class FanPane extends FlowPane {
 //        powerButton.getStyleClass().add("fanPower");
         powerButton.setTranslateX((int) (WIDTH / 2) - 41);
         powerButton.setTranslateY(143);
-        powerButton.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                Fan fan = getFan();
-                if (fan.isOn()) {
-                    fanOff(fan);
-
-                } else {
-                    turnOnButton();
-                }
-                mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), fan.getPower(), id);
-
+        powerButton.setOnAction((ActionEvent e) -> {
+            Fan fan1 = getFan();
+            if (fan1.isOn()) {
+                fanOff(fan1);
+            } else {
+                turnOnButton();
             }
+            mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), fan1.getPower(), id);
         });
 
-        speedKnob.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!speedKnob.isValueChanging()) {
-                            if (newValue == null) {
-                                speedField.setText("");
-                                return;
-                            }
-                            double roundOff = (double) Math.round(speedKnob.getValue() * 100) / 100;
-                            String total2 = String.valueOf(roundOff);
-                            speedField.setText(total2);
-                            if (power==false) turnOnButton(); //need to call this to change design to on if it's currently off
-
-                            //fan.setSpeed(speedKnob.getValue());
-                            mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), power, id);
-                        }
+        speedKnob.valueChangingProperty().addListener((ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) -> {
+            Platform.runLater(() -> {
+                if (!speedKnob.isValueChanging()) {
+                    if (newValue == null) {
+                        speedField.setText("");
+                        return;
                     }
-                });
-            }
+                    double roundOff = (double) Math.round(speedKnob.getValue() * 100) / 100;
+                    String total2 = String.valueOf(roundOff);
+                    fan.setSpeed(speedKnob.getValue());
+                    speedField.setText(total2);
+                    if (power==false) turnOnButton(); //need to call this to change design to on if it's currently off
+                    
+                    //fan.setSpeed(speedKnob.getValue());
+                    mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), power, id);
+                }
+            });
         });
 
-        freqKnob.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) {
-
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!freqKnob.isValueChanging()) {
-                            if (newValue == null) {
-                                freqField.setText("");
-                                return;
-                            }
-                            double roundOff2 = (double) Math.round(freqKnob.getValue() * 100) / 100;
-                            String total3 = String.valueOf(roundOff2);
-                            freqField.setText(total3);
-                            mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), power, id);
+        freqKnob.valueChangingProperty().addListener((ObservableValue<? extends Boolean> observableValue, Boolean oldValue, Boolean newValue) -> {
+            Platform.runLater(() -> {
+                if (!freqKnob.isValueChanging()) {
+                    if (newValue == null) {
+                        freqField.setText("");
+                        return;
+                    }
+                    double roundOff2 = (double) Math.round(freqKnob.getValue() * 100) / 100;
+                    String total3 = String.valueOf(roundOff2);
+                    fan.setFreq(freqKnob.getValue());
+                    freqField.setText(total3);
+                    mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), power, id);
 //                            System.out.println("Freq updated: " + freqKnob.getValue());
 //                            System.out.println("total3: " + total3);
-                        }
-                    }
-                });
-            }
+                }
+            });
         });
 
         // Create background fill
@@ -282,7 +260,7 @@ public class FanPane extends FlowPane {
         //   Performs:  Turn On/Off/Changes Speed of Fan animation
         //   Outputs:   None
         temperatureTF.setOnAction((ActionEvent e) -> {
-            System.out.println(id + ": " + temperatureTF.getText());
+//            System.out.println(id + ": " + temperatureTF.getText());
 
             // Update Temperature
             fan.setTemperature(Double.parseDouble(temperatureTF.getText()));
@@ -306,7 +284,7 @@ public class FanPane extends FlowPane {
         power = true; //It's more reliable to have this single public function that do 1 exact thing for everyone
 //        fan.setPower(true);
         fan.turnOn(true, freqKnob.getValue());
-        System.out.println("turnOnButton fan.getPower----> " + fan.getPower());
+//        System.out.println("turnOnButton fan.getPower----> " + fan.getPower());
 //        System.out.println("ON power----> " + power);    
 
     }
@@ -327,7 +305,7 @@ public class FanPane extends FlowPane {
 
         power = false; //Same reason as in turnOnButton
         fan.setPower(false);
-        System.out.println("turnOffButton fan.getPower----> " + fan.getPower());
+//        System.out.println("turnOffButton fan.getPower----> " + fan.getPower());
 //        System.out.println("OFF power----> " + power);    
     }
 
@@ -335,9 +313,13 @@ public class FanPane extends FlowPane {
         fan.turnOff();
         turnOffButton();
         speedKnob.adjustValue(0);
-        freqKnob.adjustValue(18000);
-        mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), fan.getPower(), id);
+        fan.setSpeed(speedKnob.getValue());
 
+        freqKnob.adjustValue(18000);
+        fan.setFreq(freqKnob.getValue());
+
+        mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), fan.getPower(), id);
+        
     }
 
     // Fan
@@ -397,11 +379,8 @@ public class FanPane extends FlowPane {
             @Override
             public void handle(long now) {
                 if (now > lastTimerCall + 3_000_000_000l) {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            gauge.setValue(RND.nextDouble() * 30.0 + 10);
-                        }
+                    Platform.runLater(() -> {
+                        gauge.setValue(RND.nextDouble() * 30.0 + 10);
                     });
                     lastTimerCall = now;
 
@@ -416,7 +395,6 @@ public class FanPane extends FlowPane {
             Platform.runLater(() -> gauge.setValue(fan.getSpeed()));
             Thread.sleep(5);
         } catch (InterruptedException ex) {
-            ex.printStackTrace();
         }
     }
 

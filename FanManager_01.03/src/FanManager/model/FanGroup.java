@@ -8,6 +8,7 @@ package FanManager.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class FanGroup implements Serializable {
 
@@ -26,7 +27,7 @@ public class FanGroup implements Serializable {
     //
     public FanGroup(double temperature, double humidity, double barometricPressure) {
         super();
-        this.fans = new ArrayList<Fan>();
+        this.fans = new ArrayList<>();
     }
 
     public FanGroup(ArrayList<Fan> fans, double temperature, double humidity, double barometricPressure) {
@@ -40,7 +41,7 @@ public class FanGroup implements Serializable {
     // Takes array of fans
     public FanGroup(Fan[] fans, double temperature, double humidity, double barometricPressure) {
         super();
-        this.fans = new ArrayList<Fan>(Arrays.asList(fans));
+        this.fans = new ArrayList<>(Arrays.asList(fans));
         this.temperature = temperature;
         this.humidity = humidity;
         this.barometricPressure = barometricPressure;
@@ -66,7 +67,7 @@ public class FanGroup implements Serializable {
 
     // Takes array of fans
     public synchronized void setFans(Fan[] fans) {
-        this.fans = new ArrayList<Fan>(Arrays.asList(fans));
+        this.fans = new ArrayList<>(Arrays.asList(fans));
     }
 
     // Temperature
@@ -111,38 +112,48 @@ public class FanGroup implements Serializable {
         return false;
     }
 
-    public String getManagerString() {
-        String result = "Manager;";
-
-        for (int i = 0; i < fans.size(); i++) {
-            result = result
-                    + String.format("f%d[%d,%.2f];", (i + 1),
-                            fans.get(i).getSpeed(),
-                            fans.get(i).getFreq());
-        }
-
-        result = result + "end\n";
-
-        return result;
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.fans);
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.temperature) ^ (Double.doubleToLongBits(this.temperature) >>> 32));
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.humidity) ^ (Double.doubleToLongBits(this.humidity) >>> 32));
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.barometricPressure) ^ (Double.doubleToLongBits(this.barometricPressure) >>> 32));
+        return hash;
     }
 
-    public String getPrototypeString() {
-        String result = "Proto;"
-                + String.format("t[%.1f];h[%.1f];p[%.2f];",
-                        temperature,
-                        humidity,
-                        barometricPressure);
-
-        for (int i = 0; i < fans.size(); i++) {
-            result = result
-                    + String.format("f%d[%.1f];", (i + 1),
-                            fans.get(i).getTemperature());
-        }
-
-        result = result + "end\n";
-
-        return result;
-    }
+//    public String getManagerString() {
+//        String result = "Manager;";
+//
+//        for (int i = 0; i < fans.size(); i++) {
+//            result = result
+//                    + String.format("f%d[%d,%.2f];", (i + 1),
+//                            fans.get(i).getSpeed(),
+//                            fans.get(i).getFreq());
+//        }
+//
+//        result = result + "end\n";
+//
+//        return result;
+//    }
+//
+//    public String getPrototypeString() {
+//        String result = "Proto;"
+//                + String.format("t[%.1f];h[%.1f];p[%.2f];",
+//                        temperature,
+//                        humidity,
+//                        barometricPressure);
+//
+//        for (int i = 0; i < fans.size(); i++) {
+//            result = result
+//                    + String.format("f%d[%.1f];", (i + 1),
+//                            fans.get(i).getTemperature());
+//        }
+//
+//        result = result + "end\n";
+//
+//        return result;
+//    }
 
     
 }

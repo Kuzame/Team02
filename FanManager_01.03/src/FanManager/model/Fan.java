@@ -7,7 +7,7 @@ package FanManager.model;
 
 import java.io.Serializable;
 
-public class Fan implements Serializable {
+public final class Fan implements Serializable {
 
     /**
      * For serialization/deserialization to check class version.
@@ -192,6 +192,21 @@ public class Fan implements Serializable {
         }
 
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + (this.isOn ? 1 : 0);
+        hash = 89 * hash + (this.power ? 1 : 0);
+        hash = 89 * hash + (int) (Double.doubleToLongBits(this.freq) ^ (Double.doubleToLongBits(this.freq) >>> 32));
+        hash = 89 * hash + (int) (Double.doubleToLongBits(this.speed) ^ (Double.doubleToLongBits(this.speed) >>> 32));
+        hash = 89 * hash + (int) (Double.doubleToLongBits(this.minStartingTemp) ^ (Double.doubleToLongBits(this.minStartingTemp) >>> 32));
+        hash = 89 * hash + (int) (Double.doubleToLongBits(this.minRunningTemp) ^ (Double.doubleToLongBits(this.minRunningTemp) >>> 32));
+        hash = 89 * hash + (int) (Double.doubleToLongBits(this.minSpeed) ^ (Double.doubleToLongBits(this.minSpeed) >>> 32));
+        hash = 89 * hash + (int) (Double.doubleToLongBits(this.maxSpeed) ^ (Double.doubleToLongBits(this.maxSpeed) >>> 32));
+        hash = 89 * hash + (int) (Double.doubleToLongBits(this.temperature) ^ (Double.doubleToLongBits(this.temperature) >>> 32));
+        return hash;
     }
 
 }
