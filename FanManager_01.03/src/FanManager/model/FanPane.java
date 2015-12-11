@@ -129,6 +129,9 @@ public class FanPane extends FlowPane {
         speedKnob.valueProperty().bindBidirectional(gauge.valueProperty());
         speedField.valueProperty().bindBidirectional(speedKnob.valueProperty());
         speedField.setPrefWidth(75);
+        // Get values from speedKnob and the gauge to display in the input label
+        speedField.setText(Math.round(speedKnob.getValue()) + "");
+        speedField.setText(Math.round(gauge.getValue()) + "");
 
         // Speed Input Label
         // Create input label
@@ -147,7 +150,7 @@ public class FanPane extends FlowPane {
         freqLabel.setStyle("-fx-text-fill: white;");
 
         // Create frequency Knob
-        freqKnob = new Slider(0, 100, 0);
+        freqKnob = new Slider(0, 25000, 18000);
         freqKnob.setBlockIncrement(1);
         freqKnob.setId("knob");
         freqKnob.getStyleClass().add("knobStyle");
@@ -162,10 +165,9 @@ public class FanPane extends FlowPane {
         freqField.setTranslateX((int) (WIDTH / 16));
         freqField.setTranslateY((int) (HEIGHT / 32) + 560);
         freqField.valueProperty().bindBidirectional(freqKnob.valueProperty());
+        // Get values from freqKnob to display in the input label
+        freqField.setText(Math.round(freqKnob.getValue()) + "");
 
-//        // Get values from speedKnob and the gauge to display in the input label
-        speedField.setText(Math.round(speedKnob.getValue()) + "");
-        speedField.setText(Math.round(gauge.getValue()) + "");
 
         powerButton.setStyle(
                 "-fx-background-color: \n"
@@ -193,19 +195,14 @@ public class FanPane extends FlowPane {
 
             @Override
             public void handle(ActionEvent e) {
-//                System.out.println("IN fan.isOn-->" + fan.isOn());
                 Fan fan = getFan();
                 if (fan.isOn()) {
-//                    turnOffButton();//PS: We have to decide where to call this function only once, not multiple times since we also called it in fanOff(below)
-//                    System.out.println("Turning off the power");
                     fanOff(fan);
 
                 } else {
-//                    System.out.println("handle else");
                     turnOnButton();
                 }
                 mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), fan.getPower(), id);
-//                System.out.println("OUT fan.isOn-->" + fan.isOn());
 
             }
         });
@@ -229,7 +226,6 @@ public class FanPane extends FlowPane {
 
                             //fan.setSpeed(speedKnob.getValue());
                             mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), power, id);
-//                            System.out.println("Speed updated");
                         }
                     }
                 });
@@ -248,13 +244,12 @@ public class FanPane extends FlowPane {
                                 freqField.setText("");
                                 return;
                             }
-//                            freqField.setText((freqKnob.getValue()) + "");
                             double roundOff2 = (double) Math.round(freqKnob.getValue() * 100) / 100;
                             String total3 = String.valueOf(roundOff2);
                             freqField.setText(total3);
-                            //fan.setSpeed(speedKnob.getValue());
                             mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), power, id);
-//                            System.out.println("Freq updated");
+//                            System.out.println("Freq updated: " + freqKnob.getValue());
+//                            System.out.println("total3: " + total3);
                         }
                     }
                 });
@@ -309,9 +304,9 @@ public class FanPane extends FlowPane {
                 "-fx-padding: 0px;");
 
         power = true; //It's more reliable to have this single public function that do 1 exact thing for everyone
-        fan.setPower(true);
-        fan.turnOn(true, 1250);
-//        System.out.println("turnOnButton fan.getPower----> " + fan.getPower());
+//        fan.setPower(true);
+        fan.turnOn(true, freqKnob.getValue());
+        System.out.println("turnOnButton fan.getPower----> " + fan.getPower());
 //        System.out.println("ON power----> " + power);    
 
     }
@@ -332,16 +327,16 @@ public class FanPane extends FlowPane {
 
         power = false; //Same reason as in turnOnButton
         fan.setPower(false);
-//        System.out.println("turnOffButton fan.getPower----> " + fan.getPower());
+        System.out.println("turnOffButton fan.getPower----> " + fan.getPower());
 //        System.out.println("OFF power----> " + power);    
     }
 
     public void fanOff(Fan fan) {
-//        System.out.println("Inside fanOff");
         fan.turnOff();
         turnOffButton();
         speedKnob.adjustValue(0);
-        freqKnob.adjustValue(0);
+        freqKnob.adjustValue(18000);
+        mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), fan.getPower(), id);
 
     }
 
@@ -362,7 +357,7 @@ public class FanPane extends FlowPane {
     }
 
     private FreqInputField FreqInputField() {
-        freqField = new FreqInputField(0, 100, 0);
+        freqField = new FreqInputField(0, 25000, 40);
         return freqField;
     }
 

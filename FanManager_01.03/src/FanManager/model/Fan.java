@@ -51,7 +51,7 @@ public class Fan implements Serializable {
             double minSpeed, double maxSpeed, double temperature) {
         super();
 
-        this.power = false;
+        this.power = power;
         this.freq = freq;
         this.minStartingTemp = minStartingTemp;
         this.minRunningTemp = minRunningTemp;
@@ -98,11 +98,11 @@ public class Fan implements Serializable {
 
     // Power
     public boolean getPower() {
-        return power;
+        return isOn;
     }
 
     public void setPower(boolean power) {
-        this.power = false;
+        this.power = power;
     }
 
     // Freq

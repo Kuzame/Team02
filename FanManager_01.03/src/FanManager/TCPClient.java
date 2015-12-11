@@ -196,19 +196,32 @@ public class TCPClient implements Runnable {
         try {
 
 //            System.out.println("sending data");
-            fanGroup = mainApp.getFanGroup();
+//            fanGroup = mainApp.getFanGroup();
 
-            f1Speed = (int) fanGroup.getFans().get(0).getSpeed();
-            f2Speed = (int) fanGroup.getFans().get(1).getSpeed();
-            f3Speed = (int) fanGroup.getFans().get(2).getSpeed();
+            f1Speed = (int) (double) fanGroup.getFans().get(0).getSpeed();
+            f2Speed = (int) (double) fanGroup.getFans().get(1).getSpeed();
+            f3Speed = (int) (double) fanGroup.getFans().get(2).getSpeed();
 
-            f1Freq = (int) fanGroup.getFans().get(0).getFreq();
-            f2Freq = (int) fanGroup.getFans().get(1).getFreq();
-            f3Freq = (int) fanGroup.getFans().get(2).getFreq();
+            System.out.println("f1Speed: " + f1Speed);
+            System.out.println("f2Speed: " + f2Speed);
+            System.out.println("f3Speed: " + f3Speed);
+
+            f1Freq = (int) (double) fanGroup.getFans().get(0).getFreq();
+            f2Freq = (int) (double) fanGroup.getFans().get(1).getFreq();
+            f3Freq = (int) (double) fanGroup.getFans().get(2).getFreq();
+
+            System.out.println("f1Freq: " + f1Freq);
+            System.out.println("f2Freq: " + f2Freq);
+            System.out.println("f3Freq: " + f3Freq);
 
             f1Power = (boolean) fanGroup.getFans().get(0).getPower();
             f2Power = (boolean) fanGroup.getFans().get(1).getPower();
             f3Power = (boolean) fanGroup.getFans().get(2).getPower();
+ 
+            System.out.println("f1Power: " + f1Power);
+            System.out.println("f2Power: " + f2Power);
+            System.out.println("f3Power: " + f3Power);
+
 
 //            FS1 += round(f1Speed, 0);
 //            FS2 += round(f2Speed, 0);
@@ -237,7 +250,8 @@ public class TCPClient implements Runnable {
             System.out.println("FF1: " + FF1);
             System.out.println("FF2: " + FF2);
             System.out.println("FF3: " + FF3);
-
+            
+            
             if (f1Power == false)
                 f1PowerToInt = 0;
             if (f1Power == true)
