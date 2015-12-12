@@ -280,12 +280,10 @@ public final class FanPane extends FlowPane {
                 + "-fx-border-color: limegreen;"
                 + //"-fx-border-width: 10px"+
                 "-fx-padding: 0px;");
-
+        fan.setFreq(18000);
         power = true; //It's more reliable to have this single public function that do 1 exact thing for everyone
-//        fan.setPower(true);
-        fan.turnOn(true, freqKnob.getValue());
-//        System.out.println("turnOnButton fan.getPower----> " + fan.getPower());
-//        System.out.println("ON power----> " + power);    
+        fan.turnOn(true, fan.getFreq(), fan.getSpeed());
+        mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), power, id);
 
     }
 
@@ -305,18 +303,17 @@ public final class FanPane extends FlowPane {
 
         power = false; //Same reason as in turnOnButton
         fan.setPower(false);
-//        System.out.println("turnOffButton fan.getPower----> " + fan.getPower());
-//        System.out.println("OFF power----> " + power);    
+        mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), power, id);
     }
 
     public void fanOff(Fan fan) {
-        fan.turnOff();
-        turnOffButton();
         speedKnob.adjustValue(0);
         fan.setSpeed(speedKnob.getValue());
 
         freqKnob.adjustValue(18000);
         fan.setFreq(freqKnob.getValue());
+        turnOffButton();
+        fan.turnOff();
 
         mainApp.updateFanList(speedKnob.getValue(), freqKnob.getValue(), fan.getPower(), id);
         
@@ -339,7 +336,7 @@ public final class FanPane extends FlowPane {
     }
 
     private FreqInputField FreqInputField() {
-        freqField = new FreqInputField(0, 25000, 40);
+        freqField = new FreqInputField(0, 25000, 18000);
         return freqField;
     }
 

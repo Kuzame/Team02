@@ -67,7 +67,7 @@ public final class Fan implements Serializable {
     public void turnOff() {
         isOn = false;
         power = false;
-        freq = 40;
+        freq = 18000;
         setSpeed(0);
     }
 
@@ -76,7 +76,7 @@ public final class Fan implements Serializable {
     public void turnOn(boolean power, double freq, double speed) {
         isOn = true;
 
-        this.power = true;
+        this.power = power;
         this.freq = freq;
         setSpeed(speed);
     }
@@ -84,9 +84,9 @@ public final class Fan implements Serializable {
     public void turnOn(boolean power, double freq) {
         isOn = true;
 
-        this.power = true;
+        this.power = power;
         this.freq = freq;
-        setSpeed(minSpeed);
+//        setSpeed(minSpeed);
     }
 
     // Getters & Setters

@@ -48,7 +48,7 @@ public class Networking implements Runnable {
     public void run() {
         try {
             // Create a socket to connect to the server
-            server = new ServerSocket(8000);
+            server = new ServerSocket(7999);
             System.out.println("Server started at " + new Date() + '\n');
             client = server.accept();
             System.out.println("client = Server accepted");

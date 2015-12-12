@@ -7,7 +7,6 @@ package FanManager.view;
 
 import FanManager.model.Fan;
 import FanManager.model.FanGroup;
-import FanManager.model.FanPane;
 import FanManager.Networking;
 import FanManager.TCPClient;
 import FanManager.model.FanPane;
@@ -22,8 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.TilePane;
-import FanManager.view.RootLayoutController;
-import javafx.scene.control.Slider;
+import java.util.Arrays;
 
 /**
  * FXML Controller class
@@ -47,11 +45,14 @@ public class FanManagerLayoutController implements Initializable {
     @FXML
     private ScrollPane scrollPane;
     
+    // Fan Object
+    private Fan fan;
 
-    private int FANCOUNT = 6;
+
+    private final int FANCOUNT = 3;
 
     FanPane[] fanPanes = new FanPane[FANCOUNT];
-    private ObservableList<Fan> fanList = FXCollections.observableArrayList();
+    private final ObservableList<Fan> fanList = FXCollections.observableArrayList();
 //    private Fan[] fanArray = new Fan[FANCOUNT];
     FanGroup fanGroup;
 
@@ -60,6 +61,8 @@ public class FanManagerLayoutController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+    // Create fan object
+        fan = new Fan();
 
         // Create fan panes; current 6
         for (int i = 0; i < fanPanes.length; i++) {
@@ -73,9 +76,7 @@ public class FanManagerLayoutController implements Initializable {
         tilePane.setHgap(-20);
 
         // Add fan panes to tile pane
-        for (FanPane fanPane : fanPanes) {
-            tilePane.getChildren().add(fanPane);
-        }
+        boolean addAll = tilePane.getChildren().addAll(Arrays.asList(fanPanes));
 
         fanGroup = new FanGroup(fanList.toArray(new Fan[0]),
                 (fanList.get(0)).getTemperature(), 40, 50);
@@ -101,7 +102,7 @@ public class FanManagerLayoutController implements Initializable {
     }
 
     public FanGroup getFanGroup() {
-        fanGroup.setFans(new ArrayList<Fan>(fanList));
+        fanGroup.setFans(new ArrayList<>(fanList));
         return fanGroup;
     }
 
@@ -121,10 +122,12 @@ public class FanManagerLayoutController implements Initializable {
     private void handleSystemOff() throws IOException {
         for( int i = 0; i < FANCOUNT; i ++)
         {
+                        Fan fan1 = getFan();
+
             fanList.get(i).turnOff();
             fanPanes[i].getSpeedKnob().adjustValue(0);
             fanPanes[i].getFreqKnob().adjustValue(0);
-            fanPanes[i].turnOffButton(); 
+            fanPanes[i].fanOff(fan1); 
             //        System.out.println("Turning off all Fans");
 //            updateFanList(fan.getSpeed(), fan.getFreq, fan.getPower, fan.isOn);
 
@@ -141,6 +144,10 @@ public class FanManagerLayoutController implements Initializable {
         pressureString = String.valueOf(pressure);
         this.barometerLabel.setText(pressureString);
     }
+
+    public Fan getFan() {
+            return fan;
+        }
 
 }
 

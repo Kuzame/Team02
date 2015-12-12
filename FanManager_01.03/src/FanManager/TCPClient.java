@@ -45,9 +45,9 @@ public class TCPClient implements Runnable {
     private String FS2 = "";
     private String FS3 = "";
 
-    private int f1Freq = 0;
-    private int f2Freq = 0;
-    private int f3Freq = 0;
+    private int f1Freq = 18000;
+    private int f2Freq = 18000;
+    private int f3Freq = 18000;
 
     private String FF1 = "";
     private String FF2 = "";
