@@ -12,6 +12,7 @@ package FanManager;
 import FanManager.model.Fan;
 import FanManager.model.FanGroup;
 import FanManager.model.FanPane;
+import FanManager.view.ConsoleController;
 import FanManager.view.FanManagerLayoutController;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -99,11 +100,14 @@ public class TCPClient implements Runnable {
             // Create a socket to connect to the server
             server = new ServerSocket(8001);
             System.out.println("Wifi started at " + new Date() + '\n');
+            ConsoleController.addOutput("Wifi started at " + new Date() + '\n');
             client = server.accept();
             System.out.println("client = Server accepted");
+            ConsoleController.addOutput("client = Server accepted");
 
             fromPrototype = new DataInputStream(client.getInputStream());
             System.out.println("fromPrototype: " + fromPrototype + '\n');
+            ConsoleController.addOutput("fromPrototype: " + fromPrototype + '\n');
 
             toPrototype = new DataOutputStream(client.getOutputStream());
 
@@ -111,6 +115,7 @@ public class TCPClient implements Runnable {
                 @Override
                 public void onChanged(ListChangeListener.Change change) {
                     System.out.println("Data changed");
+                    ConsoleController.addOutput("Data changed");
                     sendData();
                 }
             });
@@ -129,6 +134,7 @@ public class TCPClient implements Runnable {
             System.err.println(ce);
         } catch (Exception ex) {
             System.out.println("Bad TCPClient Connection");
+            ConsoleController.addOutput("Bad TCPClient Connection");
             System.err.println(ex);
 
         }
@@ -153,17 +159,17 @@ public class TCPClient implements Runnable {
                 mainBarometer = Double.parseDouble(mainBarometerIn);
 //                System.out.println("Barometer: " + mainBarometer);
 
-                FT1 = parts[3]; // Fan1 Temp
-                f1Temp = Double.parseDouble(FT1);
-//                System.out.println("Fan1 Temp: " + f1Temp);
-
-                FT2 = parts[4]; // Fan2 Temp
-                f2Temp = Double.parseDouble(FT2);
-//                System.out.println("Fan2 Temp: " + f2Temp);
-
-                FT3 = parts[5]; // Fan3 Temp
-                f3Temp = Double.parseDouble(FT3);
-//                System.out.println("Fan3 Temp: " + f2Temp);
+//                FT1 = parts[3]; // Fan1 Temp
+//                f1Temp = Double.parseDouble(FT1);
+////                System.out.println("Fan1 Temp: " + f1Temp);
+//
+//                FT2 = parts[4]; // Fan2 Temp
+//                f2Temp = Double.parseDouble(FT2);
+////                System.out.println("Fan2 Temp: " + f2Temp);
+//
+//                FT3 = parts[5]; // Fan3 Temp
+//                f3Temp = Double.parseDouble(FT3);
+////                System.out.println("Fan3 Temp: " + f2Temp);
 
                 fanGroup = mainApp.getFanGroup();
 
@@ -189,6 +195,7 @@ public class TCPClient implements Runnable {
             } catch (SocketException ex) {
                 System.err.println(ex);
                 System.out.println("Fan Server Error: Finally Block");
+                ConsoleController.addOutput("Fan Server Error: Finally Block");
             } catch (IOException ex) {
                 System.err.println(ex);
             }
@@ -199,7 +206,8 @@ public class TCPClient implements Runnable {
     private void sendData() {
         try {
 
-//            System.out.println("sending data");
+            System.out.println("sending data");
+            ConsoleController.addOutput("sending data");
 //            fanGroup = mainApp.getFanGroup();
 
             f1Speed = (int) (double) fanGroup.getFans().get(0).getSpeed();

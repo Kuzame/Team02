@@ -8,6 +8,7 @@ package FanManager;
 import FanManager.model.Fan;
 import FanManager.model.FanGroup;
 import FanManager.model.FanPane;
+import FanManager.view.ConsoleController;
 import FanManager.view.FanManagerLayoutController;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -48,27 +49,33 @@ public class Networking implements Runnable {
     public void run() {
         try {
             // Create a socket to connect to the server
-            server = new ServerSocket(7999);
+            server = new ServerSocket(8000);
             System.out.println("Server started at " + new Date() + '\n');
+            ConsoleController.addOutput("Server started at " + new Date() + '\n');
             client = server.accept();
             System.out.println("client = Server accepted");
+            ConsoleController.addOutput("client = Server accepted");
 
             // Create an output stream to send data to the server
             toClient = new ObjectOutputStream(client.getOutputStream());
             System.out.println("toClient: " + toClient + '\n');
+            ConsoleController.addOutput("toClient: " + toClient + '\n');
             
             toClient.flush();
             System.out.println("toClient flush: " + toClient + '\n');
+            ConsoleController.addOutput("toClient flush: " + toClient + '\n');
  
             // Create an input stream to receive data from the server
             fromClient = new ObjectInputStream(client.getInputStream());
             System.out.println("fromClient: " + fromClient + '\n');
+            ConsoleController.addOutput("fromClient: " + fromClient + '\n');
 
 
             fanList.addListener(new ListChangeListener() {
                 @Override
                 public void onChanged(ListChangeListener.Change change) {
                     System.out.println("Data changed");
+                    ConsoleController.addOutput("Data changed");
                     sendData();
                 }
             });
@@ -84,6 +91,7 @@ public class Networking implements Runnable {
             System.err.println(ce);
         } catch (Exception ex) {
             System.out.println("Bad");
+            ConsoleController.addOutput("Bad");
         }
     }
 
@@ -91,9 +99,11 @@ public class Networking implements Runnable {
         try {
 //            while (true) {
                 System.out.println("Waiting for object");
+                ConsoleController.addOutput("Waiting for object");
                 // Read from network
                 FanGroup temp = (FanGroup) fromClient.readObject();
                 System.out.println("Recieved object");
+                ConsoleController.addOutput("Recieved object");
                 
                 // If new fanGroup sent over, then update each fan
                 if (!fanGroup.equals(temp)) {
@@ -120,6 +130,7 @@ public class Networking implements Runnable {
             } catch (SocketException ex) {
                 System.err.println(ex);
                 System.out.println("Fan Server Error: Finally Block");
+                ConsoleController.addOutput("Fan Server Error: Finally Block");
             } catch (IOException ex) {
                 System.err.println(ex);
             }
@@ -131,6 +142,7 @@ public class Networking implements Runnable {
         try {
                 toClient.reset();
                 System.out.println("sending data from manager");
+                ConsoleController.addOutput("sending data from manager");
                 fanGroup = mainApp.getFanGroup();
                 //System.out.println(fanGroup.getFans().get(0).getSpeed());
 
@@ -139,6 +151,7 @@ public class Networking implements Runnable {
                 toClient.flush();
                 
                 System.out.println("data sent from manager");
+                ConsoleController.addOutput("data sent from manager");
 
                 
         } catch (Exception ex) {

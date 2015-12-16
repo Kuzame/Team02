@@ -9,6 +9,7 @@ import FanManager.view.Section;
 import FanManager.FreqInputField;
 import FanManager.SpeedInputField;
 import FanManager.view.FanManagerLayoutController;
+import java.util.ArrayList;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
@@ -29,7 +30,7 @@ import javafx.scene.shape.Rectangle;
  * @author Reign & Felix
  */
 public final class FanPane extends FlowPane {
-
+    public static ArrayList<String> outputList = new ArrayList<>();
     private static final double WIDTH = 350, HEIGHT = 768;
     private static int nextId = 0;
     private int id;
